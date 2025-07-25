@@ -3,10 +3,10 @@ export interface ISegmentBaseCondition {
     name: string;
     type: string;
     category: string;
-    inputType: string;
     filters: {
-        value: string | number;
+        value: string;
         operator: string;
+        date_type?: string;
         resource_id?: string;
     };
 }
@@ -29,7 +29,10 @@ export interface ISegmentConditions {
 export interface ISegmentNameDropdown {
     id: string;
     name: string;
-    operator: string;
-    inputType?: string;
-    date_type?: string;
+    filters: {
+        operator: string;
+        value: string;
+        resource_id?: string;
+        date_type?: string;
+    };
 }

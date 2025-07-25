@@ -39,31 +39,160 @@ export const SEGMENT_CONDITIONS_CATEGORY_DATA: Record<string, ISelectItem[]> = {
 // Segment Attribute Condition
 export const SEGMENT_ATTRIBUTES_NAMES_DROPDOWN: Record<string, ISegmentNameDropdown[]> = {
     Subscription: [
-        { id: "email", name: "Email", operator: "equal", inputType: "email" },
-        { id: "status", name: "Status", operator: "equal" },
-        { id: "tier", name: "Tier", operator: "equal" },
-        { id: "tier_interval", name: "Tier plan", operator: "equal" },
-        { id: "free_trial", name: "Free trial", operator: "equal" },
-        { id: "signup_date", name: "Signup date", operator: "greater_than", date_type: "specific" },
-        { id: "unsub_date", name: "Unsubscribe date", operator: "greater_than", date_type: "specific" },
-        { id: "custom_field", name: "Custom field", operator: "equal", inputType: "text" },
-        { id: "subscriber_tag", name: "Subscriber tags", operator: "contain" }
+        {
+            id: "email",
+            name: "Email",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+        {
+            id: "status",
+            name: "Status",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+        {
+            id: "tier",
+            name: "Tier",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+        {
+            id: "tier_interval",
+            name: "Tier plan",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+        {
+            id: "free_trial",
+            name: "Free trial",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+        {
+            id: "signup_date",
+            name: "Signup date",
+            filters: {
+                operator: "greater_than",
+                value: "",
+                date_type: "specific"
+            }
+        },
+        {
+            id: "unsub_date",
+            name: "Unsubscribe date",
+            filters: {
+                operator: "greater_than",
+                value: "",
+                date_type: "specific"
+            }
+        },
+        {
+            id: "custom_field",
+            name: "Custom field",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+        {
+            id: "subscriber_tag",
+            name: "Subscriber tags",
+            filters: {
+                operator: "contain",
+                value: ""
+            }
+        }
     ],
     Location: [
-        { id: "latest_location/city", name: "City", operator: "equal", inputType: "text" },
-        { id: "latest_location/state", name: "State", operator: "equal", inputType: "text" },
-        { id: "latest_location/country", name: "Country", operator: "equal" }
+        {
+            id: "latest_location/city",
+            name: "City",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+        {
+            id: "latest_location/state",
+            name: "State",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+        {
+            id: "latest_location/country",
+            name: "Country",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        }
     ],
     Acquisition: [
-        { id: "channel", name: "Channel", operator: "equal" },
-        { id: "source", name: "UTM source", operator: "equal", inputType: "text" },
-        { id: "medium", name: "UTM medium", operator: "equal", inputType: "text" },
-        { id: "compaign", name: "UTM campaign", operator: "equal", inputType: "text" },
-        { id: "referring_url", name: "Referring URL", operator: "equal", inputType: "text" },
-        { id: "external_embed", name: "Embed source", operator: "equal" }
+        {
+            id: "channel",
+            name: "Channel",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+        {
+            id: "source",
+            name: "UTM source",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+        {
+            id: "medium",
+            name: "UTM medium",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+        {
+            id: "compaign",
+            name: "UTM campaign",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+        {
+            id: "referring_url",
+            name: "Referring URL",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+        {
+            id: "external_embed",
+            name: "Embed source",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        }
     ]
 };
 export const SEGMENT_ATTRIBUTES_OPERATORS_DROPDOWN = {
+    value: "",
     common: [
         {
             id: "equal",

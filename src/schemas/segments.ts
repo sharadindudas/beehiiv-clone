@@ -6,7 +6,6 @@ export const SegmentConditionSchema = v.object({
     name: v.pipe(v.string(), v.nonEmpty("Name is required"), v.minLength(1, "Name cannot be empty")),
     type: v.pipe(v.string(), v.nonEmpty("Type is required")),
     category: v.pipe(v.string(), v.nonEmpty("Category is required")),
-    inputType: v.optional(v.string()),
     filters: v.object({
         date_type: v.optional(v.string()),
         value: v.pipe(v.string(), v.nonEmpty("Value is required"), v.minLength(1, "Value cannot be empty")),

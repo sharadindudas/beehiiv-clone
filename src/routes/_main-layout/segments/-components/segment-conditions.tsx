@@ -18,6 +18,7 @@ import {
     SEGMENT_MAIN_OPERATORS
 } from "@/data/segments-data";
 import { SegmentConditionsSchema } from "@/schemas/segments";
+import type { ISegmentNameDropdown } from "@/types/segment";
 import { useForm, useStore } from "@tanstack/react-form";
 import { ArrowRight, Plus } from "lucide-react";
 import React from "react";
@@ -111,34 +112,11 @@ const SegmentConditionsSection = () => {
                                                                     `conditions.conditions[${parentIndex}].name`,
                                                                     selectedName?.name ?? ""
                                                                 );
-                                                                form.setFieldValue(
-                                                                    `conditions.conditions[${parentIndex}].inputType`,
-                                                                    selectedName?.inputType ?? ""
-                                                                );
-                                                                form.setFieldValue(
-                                                                    `conditions.conditions[${parentIndex}].filters.operator`,
-                                                                    selectedName?.operator ?? ""
-                                                                );
-                                                                form.setFieldValue(
-                                                                    `conditions.conditions[${parentIndex}].filters.date_type`,
-                                                                    selectedName?.date_type ?? ""
-                                                                );
 
-                                                                // const updatedConditions = currentConditions.map((condition, index) =>
-                                                                //     index === parentIndex
-                                                                //         ? {
-                                                                //               ...condition,
-                                                                //               id: value,
-                                                                //               name: selectedName?.name ?? "",
-                                                                //               inputType: selectedName?.inputType ?? "",
-                                                                //               filters: {
-                                                                //                   ...condition.filters,
-                                                                //                   operator: selectedName?.operator ?? ""
-                                                                //               }
-                                                                //           }
-                                                                //         : condition
-                                                                // );
-                                                                // field.handleChange(updatedConditions);
+                                                                form.setFieldValue(
+                                                                    `conditions.conditions[${parentIndex}].filters`,
+                                                                    selectedName?.filters as ISegmentNameDropdown["filters"]
+                                                                );
                                                             }}>
                                                             <SelectTrigger className="flex-1 bg-white">
                                                                 <SelectValue placeholder={`Select ${condition.type}`} />
@@ -201,16 +179,14 @@ const SegmentConditionsSection = () => {
                                                 <form.Field name={`conditions.conditions[${parentIndex}].filters.value`}>
                                                     {(subField) => {
                                                         const currentCondition = field.state.value[parentIndex];
-                                                        console.log(currentCondition);
-
                                                         const valuesDropdown = SEGMENT_ATTRIBUTES_VALUE_RESOURCE_ID_DROPDOWN[condition.id];
                                                         switch (condition.id) {
                                                             case "email":
                                                                 return (
                                                                     <Input
                                                                         name={condition.id}
-                                                                        type={condition.inputType}
-                                                                        className="bg-white flex-1"
+                                                                        type="email"
+                                                                        className="bg-white flex-1 text-sm"
                                                                         placeholder={`Set ${condition.name}`}
                                                                         value={subField.state.value ?? ""}
                                                                         onChange={(e) => subField.handleChange(e.target.value)}
@@ -227,7 +203,7 @@ const SegmentConditionsSection = () => {
                                                                         <SelectTrigger className="flex-1 bg-white">
                                                                             <SelectValue placeholder={`Select ${condition.name}`} />
                                                                         </SelectTrigger>
-                                                                        <SelectContent className="h-48">
+                                                                        <SelectContent>
                                                                             {valuesDropdown.map((item) => (
                                                                                 <SelectItem
                                                                                     key={item.id}
@@ -239,6 +215,7 @@ const SegmentConditionsSection = () => {
                                                                     </Select>
                                                                 );
                                                             case "signup_date":
+                                                            case "unsub_date":
                                                                 return (
                                                                     <>
                                                                         <Select
@@ -265,20 +242,89 @@ const SegmentConditionsSection = () => {
 
                                                                         <Input
                                                                             name={condition.type.toLowerCase()}
-                                                                            type={condition.inputType}
-                                                                            className="bg-white flex-1"
+                                                                            type="text"
+                                                                            className="bg-white flex-1 text-sm"
                                                                             placeholder="Set a value"
                                                                             value={subField.state.value ?? ""}
                                                                             onChange={(e) => subField.handleChange(e.target.value)}
                                                                         />
                                                                     </>
                                                                 );
+                                                            case "custom_field":
+                                                                return (
+                                                                    <>
+                                                                        <Select
+                                                                            value={currentCondition.filters.resource_id ?? ""}
+                                                                            onValueChange={(value) => {
+                                                                                form.setFieldValue(
+                                                                                    `conditions.conditions[${parentIndex}].filters.resource_id`,
+                                                                                    value
+                                                                                );
+                                                                            }}>
+                                                                            <SelectTrigger className="flex-1 bg-white">
+                                                                                <SelectValue placeholder={`Select ${condition.name}`} />
+                                                                            </SelectTrigger>
+                                                                            <SelectContent>
+                                                                                {SEGMENT_ATTRIBUTES_VALUE_RESOURCE_ID_DROPDOWN[condition.id].map(
+                                                                                    (item) => (
+                                                                                        <SelectItem
+                                                                                            key={item.id}
+                                                                                            value={item.id}>
+                                                                                            {item.name}
+                                                                                        </SelectItem>
+                                                                                    )
+                                                                                )}
+                                                                            </SelectContent>
+                                                                        </Select>
+
+                                                                        <Input
+                                                                            name={condition.type.toLowerCase()}
+                                                                            type="text"
+                                                                            className="bg-white flex-1 text-sm"
+                                                                            placeholder="Set a value"
+                                                                            value={subField.state.value ?? ""}
+                                                                            onChange={(e) => subField.handleChange(e.target.value)}
+                                                                        />
+                                                                    </>
+                                                                );
+                                                            case "subscriber_tag":
+                                                                return (
+                                                                    <Select
+                                                                        value={subField.state.value ?? ""}
+                                                                        onValueChange={(value) => subField.handleChange(value)}>
+                                                                        <SelectTrigger className="flex-1 bg-white">
+                                                                            <SelectValue placeholder={`Select ${condition.name}`} />
+                                                                        </SelectTrigger>
+                                                                        <SelectContent>
+                                                                            {SEGMENT_ATTRIBUTES_VALUE_RESOURCE_ID_DROPDOWN[condition.id].map(
+                                                                                (item) => (
+                                                                                    <SelectItem
+                                                                                        key={item.id}
+                                                                                        value={item.id}>
+                                                                                        {item.name}
+                                                                                    </SelectItem>
+                                                                                )
+                                                                            )}
+                                                                        </SelectContent>
+                                                                    </Select>
+                                                                );
+                                                            case "latest_location/city":
+                                                                return (
+                                                                    <Input
+                                                                        name={condition.type.toLowerCase()}
+                                                                        type="text"
+                                                                        className="bg-white flex-1 text-sm"
+                                                                        placeholder="Set a value"
+                                                                        value={subField.state.value ?? ""}
+                                                                        onChange={(e) => subField.handleChange(e.target.value)}
+                                                                    />
+                                                                );
                                                             default:
                                                                 return (
                                                                     <Input
                                                                         name={condition.type.toLowerCase()}
-                                                                        type={condition.inputType}
-                                                                        className="bg-white flex-1"
+                                                                        type="text"
+                                                                        className="bg-white flex-1 text-sm"
                                                                         placeholder="Set a value"
                                                                         value={subField.state.value ?? ""}
                                                                         onChange={(e) => subField.handleChange(e.target.value)}
@@ -317,11 +363,9 @@ const SegmentConditionsSection = () => {
                                                                 name: "",
                                                                 category: category,
                                                                 type: type.name,
-                                                                inputType: "",
                                                                 filters: {
                                                                     operator: "",
-                                                                    value: "",
-                                                                    resource_id: ""
+                                                                    value: ""
                                                                 }
                                                             });
                                                         }}>
