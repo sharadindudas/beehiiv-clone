@@ -12,9 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as MainLayoutRouteRouteImport } from './routes/_main-layout/route'
 import { Route as AuthLayoutRouteRouteImport } from './routes/_auth-layout/route'
 import { Route as MainLayoutIndexRouteImport } from './routes/_main-layout/index'
-import { Route as MainLayoutSegmentsIndexRouteImport } from './routes/_main-layout/segments/index'
+import { Route as AuthenticatedLayoutMainLayoutRouteRouteImport } from './routes/_authenticated-layout/_main-layout/route'
 import { Route as AuthLayoutRegisterIndexRouteImport } from './routes/_auth-layout/register/index'
 import { Route as AuthLayoutLoginIndexRouteImport } from './routes/_auth-layout/login/index'
+import { Route as AuthenticatedLayoutMainLayoutSegmentsIndexRouteImport } from './routes/_authenticated-layout/_main-layout/segments/index'
+import { Route as AuthenticatedLayoutMainLayoutPostsIndexRouteImport } from './routes/_authenticated-layout/_main-layout/posts/index'
+import { Route as AuthenticatedLayoutMainLayoutDashboardIndexRouteImport } from './routes/_authenticated-layout/_main-layout/dashboard/index'
 
 const MainLayoutRouteRoute = MainLayoutRouteRouteImport.update({
   id: '/_main-layout',
@@ -29,11 +32,11 @@ const MainLayoutIndexRoute = MainLayoutIndexRouteImport.update({
   path: '/',
   getParentRoute: () => MainLayoutRouteRoute,
 } as any)
-const MainLayoutSegmentsIndexRoute = MainLayoutSegmentsIndexRouteImport.update({
-  id: '/segments/',
-  path: '/segments/',
-  getParentRoute: () => MainLayoutRouteRoute,
-} as any)
+const AuthenticatedLayoutMainLayoutRouteRoute =
+  AuthenticatedLayoutMainLayoutRouteRouteImport.update({
+    id: '/_authenticated-layout/_main-layout',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AuthLayoutRegisterIndexRoute = AuthLayoutRegisterIndexRouteImport.update({
   id: '/register/',
   path: '/register/',
@@ -44,46 +47,81 @@ const AuthLayoutLoginIndexRoute = AuthLayoutLoginIndexRouteImport.update({
   path: '/login/',
   getParentRoute: () => AuthLayoutRouteRoute,
 } as any)
+const AuthenticatedLayoutMainLayoutSegmentsIndexRoute =
+  AuthenticatedLayoutMainLayoutSegmentsIndexRouteImport.update({
+    id: '/segments/',
+    path: '/segments/',
+    getParentRoute: () => AuthenticatedLayoutMainLayoutRouteRoute,
+  } as any)
+const AuthenticatedLayoutMainLayoutPostsIndexRoute =
+  AuthenticatedLayoutMainLayoutPostsIndexRouteImport.update({
+    id: '/posts/',
+    path: '/posts/',
+    getParentRoute: () => AuthenticatedLayoutMainLayoutRouteRoute,
+  } as any)
+const AuthenticatedLayoutMainLayoutDashboardIndexRoute =
+  AuthenticatedLayoutMainLayoutDashboardIndexRouteImport.update({
+    id: '/dashboard/',
+    path: '/dashboard/',
+    getParentRoute: () => AuthenticatedLayoutMainLayoutRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof MainLayoutIndexRoute
   '/login': typeof AuthLayoutLoginIndexRoute
   '/register': typeof AuthLayoutRegisterIndexRoute
-  '/segments': typeof MainLayoutSegmentsIndexRoute
+  '/dashboard': typeof AuthenticatedLayoutMainLayoutDashboardIndexRoute
+  '/posts': typeof AuthenticatedLayoutMainLayoutPostsIndexRoute
+  '/segments': typeof AuthenticatedLayoutMainLayoutSegmentsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof MainLayoutIndexRoute
   '/login': typeof AuthLayoutLoginIndexRoute
   '/register': typeof AuthLayoutRegisterIndexRoute
-  '/segments': typeof MainLayoutSegmentsIndexRoute
+  '/dashboard': typeof AuthenticatedLayoutMainLayoutDashboardIndexRoute
+  '/posts': typeof AuthenticatedLayoutMainLayoutPostsIndexRoute
+  '/segments': typeof AuthenticatedLayoutMainLayoutSegmentsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_auth-layout': typeof AuthLayoutRouteRouteWithChildren
   '/_main-layout': typeof MainLayoutRouteRouteWithChildren
+  '/_authenticated-layout/_main-layout': typeof AuthenticatedLayoutMainLayoutRouteRouteWithChildren
   '/_main-layout/': typeof MainLayoutIndexRoute
   '/_auth-layout/login/': typeof AuthLayoutLoginIndexRoute
   '/_auth-layout/register/': typeof AuthLayoutRegisterIndexRoute
-  '/_main-layout/segments/': typeof MainLayoutSegmentsIndexRoute
+  '/_authenticated-layout/_main-layout/dashboard/': typeof AuthenticatedLayoutMainLayoutDashboardIndexRoute
+  '/_authenticated-layout/_main-layout/posts/': typeof AuthenticatedLayoutMainLayoutPostsIndexRoute
+  '/_authenticated-layout/_main-layout/segments/': typeof AuthenticatedLayoutMainLayoutSegmentsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/register' | '/segments'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/register'
+    | '/dashboard'
+    | '/posts'
+    | '/segments'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/register' | '/segments'
+  to: '/' | '/login' | '/register' | '/dashboard' | '/posts' | '/segments'
   id:
     | '__root__'
     | '/_auth-layout'
     | '/_main-layout'
+    | '/_authenticated-layout/_main-layout'
     | '/_main-layout/'
     | '/_auth-layout/login/'
     | '/_auth-layout/register/'
-    | '/_main-layout/segments/'
+    | '/_authenticated-layout/_main-layout/dashboard/'
+    | '/_authenticated-layout/_main-layout/posts/'
+    | '/_authenticated-layout/_main-layout/segments/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   AuthLayoutRouteRoute: typeof AuthLayoutRouteRouteWithChildren
   MainLayoutRouteRoute: typeof MainLayoutRouteRouteWithChildren
+  AuthenticatedLayoutMainLayoutRouteRoute: typeof AuthenticatedLayoutMainLayoutRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -109,12 +147,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainLayoutIndexRouteImport
       parentRoute: typeof MainLayoutRouteRoute
     }
-    '/_main-layout/segments/': {
-      id: '/_main-layout/segments/'
-      path: '/segments'
-      fullPath: '/segments'
-      preLoaderRoute: typeof MainLayoutSegmentsIndexRouteImport
-      parentRoute: typeof MainLayoutRouteRoute
+    '/_authenticated-layout/_main-layout': {
+      id: '/_authenticated-layout/_main-layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedLayoutMainLayoutRouteRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_auth-layout/register/': {
       id: '/_auth-layout/register/'
@@ -129,6 +167,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/login'
       preLoaderRoute: typeof AuthLayoutLoginIndexRouteImport
       parentRoute: typeof AuthLayoutRouteRoute
+    }
+    '/_authenticated-layout/_main-layout/segments/': {
+      id: '/_authenticated-layout/_main-layout/segments/'
+      path: '/segments'
+      fullPath: '/segments'
+      preLoaderRoute: typeof AuthenticatedLayoutMainLayoutSegmentsIndexRouteImport
+      parentRoute: typeof AuthenticatedLayoutMainLayoutRouteRoute
+    }
+    '/_authenticated-layout/_main-layout/posts/': {
+      id: '/_authenticated-layout/_main-layout/posts/'
+      path: '/posts'
+      fullPath: '/posts'
+      preLoaderRoute: typeof AuthenticatedLayoutMainLayoutPostsIndexRouteImport
+      parentRoute: typeof AuthenticatedLayoutMainLayoutRouteRoute
+    }
+    '/_authenticated-layout/_main-layout/dashboard/': {
+      id: '/_authenticated-layout/_main-layout/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedLayoutMainLayoutDashboardIndexRouteImport
+      parentRoute: typeof AuthenticatedLayoutMainLayoutRouteRoute
     }
   }
 }
@@ -149,21 +208,42 @@ const AuthLayoutRouteRouteWithChildren = AuthLayoutRouteRoute._addFileChildren(
 
 interface MainLayoutRouteRouteChildren {
   MainLayoutIndexRoute: typeof MainLayoutIndexRoute
-  MainLayoutSegmentsIndexRoute: typeof MainLayoutSegmentsIndexRoute
 }
 
 const MainLayoutRouteRouteChildren: MainLayoutRouteRouteChildren = {
   MainLayoutIndexRoute: MainLayoutIndexRoute,
-  MainLayoutSegmentsIndexRoute: MainLayoutSegmentsIndexRoute,
 }
 
 const MainLayoutRouteRouteWithChildren = MainLayoutRouteRoute._addFileChildren(
   MainLayoutRouteRouteChildren,
 )
 
+interface AuthenticatedLayoutMainLayoutRouteRouteChildren {
+  AuthenticatedLayoutMainLayoutDashboardIndexRoute: typeof AuthenticatedLayoutMainLayoutDashboardIndexRoute
+  AuthenticatedLayoutMainLayoutPostsIndexRoute: typeof AuthenticatedLayoutMainLayoutPostsIndexRoute
+  AuthenticatedLayoutMainLayoutSegmentsIndexRoute: typeof AuthenticatedLayoutMainLayoutSegmentsIndexRoute
+}
+
+const AuthenticatedLayoutMainLayoutRouteRouteChildren: AuthenticatedLayoutMainLayoutRouteRouteChildren =
+  {
+    AuthenticatedLayoutMainLayoutDashboardIndexRoute:
+      AuthenticatedLayoutMainLayoutDashboardIndexRoute,
+    AuthenticatedLayoutMainLayoutPostsIndexRoute:
+      AuthenticatedLayoutMainLayoutPostsIndexRoute,
+    AuthenticatedLayoutMainLayoutSegmentsIndexRoute:
+      AuthenticatedLayoutMainLayoutSegmentsIndexRoute,
+  }
+
+const AuthenticatedLayoutMainLayoutRouteRouteWithChildren =
+  AuthenticatedLayoutMainLayoutRouteRoute._addFileChildren(
+    AuthenticatedLayoutMainLayoutRouteRouteChildren,
+  )
+
 const rootRouteChildren: RootRouteChildren = {
   AuthLayoutRouteRoute: AuthLayoutRouteRouteWithChildren,
   MainLayoutRouteRoute: MainLayoutRouteRouteWithChildren,
+  AuthenticatedLayoutMainLayoutRouteRoute:
+    AuthenticatedLayoutMainLayoutRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
