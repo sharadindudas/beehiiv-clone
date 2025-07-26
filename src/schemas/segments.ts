@@ -10,7 +10,9 @@ export const SegmentConditionSchema = v.object({
         date_type: v.optional(v.string()),
         value: v.pipe(v.string(), v.nonEmpty("Value is required"), v.minLength(1, "Value cannot be empty")),
         operator: v.pipe(v.string(), v.nonEmpty("Operator is required"), v.minLength(1, "Operator cannot be empty")),
-        resource_id: v.optional(v.string())
+        resource_id: v.optional(v.string()),
+        relative: v.optional(v.string()),
+        relative_amount: v.optional(v.string())
     })
 });
 export type SegmentConditionSchema = v.InferInput<typeof SegmentConditionSchema>;

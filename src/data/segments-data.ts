@@ -1,5 +1,5 @@
 import type { ISelectItem } from "@/types/common";
-import type { ISegmentNameDropdown } from "@/types/segment";
+import type { ISegmentNameDropdown } from "@/types/segments";
 
 export const SEGMENT_MAIN_OPERATORS: ISelectItem[] = [
     {
@@ -15,7 +15,7 @@ export const SEGMENT_MAIN_OPERATORS: ISelectItem[] = [
         name: "None"
     }
 ];
-export const SEGMENT_CONDITIONS_CATEGORY_DATA: Record<string, ISelectItem[]> = {
+export const SEGMENT_CONDITIONS_CATEGORIES: Record<string, ISelectItem[]> = {
     "Subscriber data": [
         { id: "attribute", name: "Attribute" },
         { id: "engagement", name: "Engagement" }
@@ -102,7 +102,8 @@ export const SEGMENT_ATTRIBUTES_NAMES_DROPDOWN: Record<string, ISegmentNameDropd
             name: "Custom field",
             filters: {
                 operator: "equal",
-                value: ""
+                value: "",
+                resource_id: ""
             }
         },
         {
@@ -192,7 +193,6 @@ export const SEGMENT_ATTRIBUTES_NAMES_DROPDOWN: Record<string, ISegmentNameDropd
     ]
 };
 export const SEGMENT_ATTRIBUTES_OPERATORS_DROPDOWN = {
-    value: "",
     common: [
         {
             id: "equal",
@@ -254,7 +254,7 @@ export const SEGMENT_ATTRIBUTES_OPERATORS_DROPDOWN = {
         { id: "not_equal", name: "was not" }
     ]
 };
-export const SEGMENT_ATTRIBUTES_VALUE_RESOURCE_ID_DROPDOWN: Record<string, ISelectItem[]> = {
+export const SEGMENT_ATTRIBUTES_VALUE_DROPDOWN: Record<string, ISelectItem[]> = {
     status: [
         { id: "active", name: "Active" },
         { id: "inactive", name: "Inactive" },
@@ -303,7 +303,7 @@ export const SEGMENT_ATTRIBUTES_VALUE_RESOURCE_ID_DROPDOWN: Record<string, ISele
             name: "dummy subscriber tag 4"
         }
     ],
-    country: [
+    "latest_location/country": [
         { id: "AF", name: "Afghanistan" },
         { id: "AX", name: "Åland Islands" },
         { id: "AL", name: "Albania" },
@@ -581,8 +581,11 @@ export const SEGMENT_ATTRIBUTES_VALUE_RESOURCE_ID_DROPDOWN: Record<string, ISele
         }
     ]
 };
-
 export const SEGMENT_ATTRIBUTE_DATE_TYPE_DROPDOWN: ISelectItem[] = [
     { id: "specific", name: "a specific date" },
     { id: "relative", name: "a relative date" }
+];
+export const SEGMENT_ATTRIBUTE_RELATIVE_DATE_TYPE_DROPDOWN: ISelectItem[] = [
+    { id: "ago", name: "ago" },
+    { id: "from_now", name: "from now" }
 ];
