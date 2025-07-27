@@ -1,5 +1,6 @@
 import type { ISelectItem } from "@/types/common";
 import type { ISegmentNameDropdown } from "@/types/segments";
+import { COMMON_CONDITION_OPERATORS_KEY, getOperatorOptions } from "./common-data";
 
 export const SEGMENT_MAIN_OPERATORS: ISelectItem[] = [
     {
@@ -18,7 +19,7 @@ export const SEGMENT_MAIN_OPERATORS: ISelectItem[] = [
 export const SEGMENT_CONDITIONS_CATEGORIES: Record<string, ISelectItem[]> = {
     "Subscriber data": [
         { id: "attribute", name: "Attribute" },
-        { id: "engagement", name: "Engagement" }
+        { id: "measure", name: "Engagement" }
     ],
     "Email data": [
         { id: "any_email", name: "Any Email" },
@@ -193,66 +194,27 @@ export const SEGMENT_ATTRIBUTES_NAMES_DROPDOWN: Record<string, ISegmentNameDropd
     ]
 };
 export const SEGMENT_ATTRIBUTES_OPERATORS_DROPDOWN = {
-    common: [
-        {
-            id: "equal",
-            name: "is"
-        },
-        {
-            id: "not_equal",
-            name: "is not"
-        },
-        {
-            id: "contain",
-            name: "contains"
-        },
-        {
-            id: "not_contain",
-            name: "does not contain"
-        },
-        {
-            id: "start_with",
-            name: "begins with"
-        },
-        {
-            id: "end_with",
-            name: "ends with"
-        },
-        {
-            id: "exists",
-            name: "exists"
-        },
-        {
-            id: "does_not_exist",
-            name: "does not exist"
-        }
-    ],
-    date: [
-        {
-            id: "greater_than",
-            name: "is after"
-        },
-        {
-            id: "greater_than_equal_to",
-            name: "is on or after"
-        },
-        {
-            id: "less_than",
-            name: "is before"
-        },
-        {
-            id: "less_than_equal_to",
-            name: "is on or before"
-        }
-    ],
-    tags: [
-        { id: "contain", name: "Includes" },
-        { id: "not_contain", name: "Excludes" }
-    ],
-    embed: [
-        { id: "equal", name: "was" },
-        { id: "not_equal", name: "was not" }
-    ]
+    common: getOperatorOptions([
+        COMMON_CONDITION_OPERATORS_KEY.equal,
+        COMMON_CONDITION_OPERATORS_KEY.not_equal,
+        COMMON_CONDITION_OPERATORS_KEY.contain,
+        COMMON_CONDITION_OPERATORS_KEY.not_contain,
+        COMMON_CONDITION_OPERATORS_KEY.start_with,
+        COMMON_CONDITION_OPERATORS_KEY.end_with,
+        COMMON_CONDITION_OPERATORS_KEY.exists,
+        COMMON_CONDITION_OPERATORS_KEY.does_not_exist
+    ]),
+    date: getOperatorOptions([
+        COMMON_CONDITION_OPERATORS_KEY.greater_than,
+        COMMON_CONDITION_OPERATORS_KEY.greater_than_equal_to,
+        COMMON_CONDITION_OPERATORS_KEY.less_than,
+        COMMON_CONDITION_OPERATORS_KEY.less_than_equal_to
+    ]),
+    tags: getOperatorOptions([COMMON_CONDITION_OPERATORS_KEY.contain, COMMON_CONDITION_OPERATORS_KEY.not_contain]),
+    embed: getOperatorOptions([COMMON_CONDITION_OPERATORS_KEY.equal, COMMON_CONDITION_OPERATORS_KEY.not_equal], {
+        [COMMON_CONDITION_OPERATORS_KEY.equal]: "was",
+        [COMMON_CONDITION_OPERATORS_KEY.not_equal]: "was not"
+    })
 };
 export const SEGMENT_ATTRIBUTES_VALUE_DROPDOWN: Record<string, ISelectItem[]> = {
     status: [
@@ -589,3 +551,134 @@ export const SEGMENT_ATTRIBUTE_RELATIVE_DATE_TYPE_DROPDOWN: ISelectItem[] = [
     { id: "ago", name: "ago" },
     { id: "from_now", name: "from now" }
 ];
+
+// Segment Engagement Condition
+export const SEGMENT_ENGAGEMENT_NAMES_DROPDOWN: Record<string, ISegmentNameDropdown[]> = {
+    Email: [
+        {
+            id: "unique_opens",
+            name: "Unique opens",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+        {
+            id: "open_rate",
+            name: "Open rate",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+        {
+            id: "unique_clicks",
+            name: "Unique clicks",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+        {
+            id: "verified_unique_clicks",
+            name: "Verified unique clicks",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+        {
+            id: "click_through_rate",
+            name: "Click through rate",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+        {
+            id: "verified_click_through_rate",
+            name: "Verified click through rate",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+        {
+            id: "unique_sends",
+            name: "Unique sends",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+        {
+            id: "link_click",
+            name: "Link click",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        }
+    ],
+    "Mailbox rejections": [
+        {
+            id: "deferred",
+            name: "Deferred",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+        {
+            id: "bounce",
+            name: "Bounced",
+            filters: {
+                operator: "equal",
+                value: ""
+            }
+        },
+       
+    ]
+};
+export const SEGMENT_ENGAGEMENT_OPERATORS_DROPDOWN = {
+    common: getOperatorOptions(
+        [
+            COMMON_CONDITION_OPERATORS_KEY.equal,
+            COMMON_CONDITION_OPERATORS_KEY.not_equal,
+            COMMON_CONDITION_OPERATORS_KEY.greater_than,
+            COMMON_CONDITION_OPERATORS_KEY.greater_than_equal_to,
+            COMMON_CONDITION_OPERATORS_KEY.less_than,
+            COMMON_CONDITION_OPERATORS_KEY.less_than_equal_to
+        ],
+        {
+            [COMMON_CONDITION_OPERATORS_KEY.equal]: "is exactly",
+            [COMMON_CONDITION_OPERATORS_KEY.not_equal]: "is not exactly",
+            [COMMON_CONDITION_OPERATORS_KEY.greater_than]: "is greater than",
+            [COMMON_CONDITION_OPERATORS_KEY.greater_than_equal_to]: "is greater than or equal to",
+            [COMMON_CONDITION_OPERATORS_KEY.less_than]: "is less than",
+            [COMMON_CONDITION_OPERATORS_KEY.less_than_equal_to]: "is less than or equal to"
+        }
+    ),
+    link: getOperatorOptions(
+        [
+            COMMON_CONDITION_OPERATORS_KEY.equal,
+            COMMON_CONDITION_OPERATORS_KEY.not_equal,
+            COMMON_CONDITION_OPERATORS_KEY.contain,
+            COMMON_CONDITION_OPERATORS_KEY.not_contain,
+            COMMON_CONDITION_OPERATORS_KEY.start_with,
+            COMMON_CONDITION_OPERATORS_KEY.end_with,
+            COMMON_CONDITION_OPERATORS_KEY.not_start_with,
+            COMMON_CONDITION_OPERATORS_KEY.not_end_with
+        ],
+        {
+            [COMMON_CONDITION_OPERATORS_KEY.equal]: "was",
+            [COMMON_CONDITION_OPERATORS_KEY.not_equal]: "was not",
+            [COMMON_CONDITION_OPERATORS_KEY.contain]: "contained",
+            [COMMON_CONDITION_OPERATORS_KEY.not_contain]: "did not contain",
+            [COMMON_CONDITION_OPERATORS_KEY.start_with]: "began with",
+            [COMMON_CONDITION_OPERATORS_KEY.end_with]: "ended with",
+            [COMMON_CONDITION_OPERATORS_KEY.not_start_with]: "did not begin with",
+            [COMMON_CONDITION_OPERATORS_KEY.not_end_with]: "did not end with"
+        }
+    )
+};
