@@ -1,17 +1,26 @@
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SEGMENT_ENGAGEMENT_NAMES_DROPDOWN, SEGMENT_ENGAGEMENT_OPERATORS_DROPDOWN } from "@/data/segments-data";
 import type { SegmentConditionSchema } from "@/schemas/segments";
 import type { ICommonSegmentConditionProps } from "@/types/segments";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Trash2 } from "lucide-react";
 
 export default function EngagementBloc({ index, condition, form }: ICommonSegmentConditionProps) {
     return (
         <div className="bg-gray-100 p-4 rounded-lg flex-1">
-            <div className="flex items-center gap-1 text-sm mb-2">
-                {condition.category}
-                <ArrowRight size={16} />
-                {condition.type}
+            <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1 text-sm mb-2">
+                    {condition.category}
+                    <ArrowRight size={16} />
+                    {condition.type}
+                </div>
+                <Button
+                    onClick={() => form.removeFieldValue("conditions.conditions", index)}
+                    variant={"ghost"}
+                    size={"icon"}>
+                    <Trash2 />
+                </Button>
             </div>
             <div className="flex flex-wrap items-end justify-center gap-5">
                 {/* Condition Name */}
@@ -110,7 +119,7 @@ export default function EngagementBloc({ index, condition, form }: ICommonSegmen
                                         name={condition.id}
                                         type="number"
                                         placeholder={`Set ${condition.name}`}
-                                        value={subField.state.value ?? ""}
+                                        value={condition.filters.value ?? ""}
                                         onChange={(e) => subField.handleChange(e.target.value)}
                                         className="bg-white flex-1"
                                     />
@@ -126,7 +135,7 @@ export default function EngagementBloc({ index, condition, form }: ICommonSegmen
                                         min={0}
                                         max={100}
                                         placeholder={`Set ${condition.name}`}
-                                        value={subField.state.value ?? ""}
+                                        value={condition.filters.value ?? ""}
                                         onChange={(e) => {
                                             let value = e.target.value;
                                             const num = Number(value);
@@ -145,11 +154,12 @@ export default function EngagementBloc({ index, condition, form }: ICommonSegmen
                             default:
                                 return (
                                     <Input
+                                        id={condition.type.toLowerCase()}
                                         name={condition.type.toLowerCase()}
                                         type="text"
                                         className="bg-white flex-1"
                                         placeholder="Set a value"
-                                        value={subField.state.value ?? ""}
+                                        value={condition.filters.value ?? ""}
                                         onChange={(e) => subField.handleChange(e.target.value)}
                                     />
                                 );

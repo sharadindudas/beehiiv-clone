@@ -1,4 +1,5 @@
 import CustomDateTimePicker from "@/components/common/custom-date-time-picker";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
@@ -10,15 +11,23 @@ import {
 import type { SegmentConditionSchema } from "@/schemas/segments";
 import type { ICommonSegmentConditionProps } from "@/types/segments";
 import { getRelativeUnixDuration } from "@/utils/common";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Trash2 } from "lucide-react";
 
 export default function AttributeBloc({ index, condition, form, field }: ICommonSegmentConditionProps) {
     return (
         <div className="bg-gray-100 p-4 rounded-lg flex-1">
-            <div className="flex items-center gap-1 text-sm mb-2">
-                {condition.category}
-                <ArrowRight size={16} />
-                {condition.type}
+            <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1 text-sm mb-2">
+                    {condition.category}
+                    <ArrowRight size={16} />
+                    {condition.type}
+                </div>
+                <Button
+                    onClick={() => form.removeFieldValue("conditions.conditions", index)}
+                    variant={"ghost"}
+                    size={"icon"}>
+                    <Trash2 />
+                </Button>
             </div>
             <div className="flex flex-wrap items-end justify-center gap-5">
                 {/* Condition Name */}
@@ -62,7 +71,26 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                 <form.Field name={`conditions.conditions[${index}].filters.operator`}>
                     {(subField) => {
                         let operatorList = SEGMENT_ATTRIBUTES_OPERATORS_DROPDOWN.common;
-                        if (["signup_date", "unsub_date"].includes(condition.id)) {
+                        if (
+                            [
+                                "email",
+                                "status",
+                                "tier",
+                                "tier_interval",
+                                "free_trial",
+                                "custom_field",
+                                "latest_location/city",
+                                "latest_location/state",
+                                "latest_location/country",
+                                "channel",
+                                "source",
+                                "medium",
+                                "campaign",
+                                "referring_url"
+                            ].includes(condition.id)
+                        ) {
+                            operatorList = SEGMENT_ATTRIBUTES_OPERATORS_DROPDOWN.common;
+                        } else if (["signup_date", "unsub_date"].includes(condition.id)) {
                             operatorList = SEGMENT_ATTRIBUTES_OPERATORS_DROPDOWN.date;
                         } else if (condition.id === "subscriber_tag") {
                             operatorList = SEGMENT_ATTRIBUTES_OPERATORS_DROPDOWN.tags;
@@ -103,9 +131,9 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                                         name={condition.id}
                                         type="email"
                                         placeholder={`Set ${condition.name}`}
-                                        value={subField.state.value ?? ""}
+                                        value={condition.filters.value ?? ""}
                                         onChange={(e) => subField.handleChange(e.target.value)}
-                                        className="bg-white flex-1"
+                                        className="bg-white flex-1 text-sm"
                                     />
                                 );
                             case "status":
@@ -116,7 +144,7 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                             case "channel":
                                 return (
                                     <Select
-                                        value={subField.state.value}
+                                        value={condition.filters.value ?? ""}
                                         onValueChange={(value) => subField.handleChange(value)}>
                                         <SelectTrigger className="flex-1 bg-white">
                                             <SelectValue placeholder={`Select ${condition.name}`} />
@@ -190,7 +218,7 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
 
                                         {condition.filters.date_type === "specific" && (
                                             <CustomDateTimePicker
-                                                date={subField.state.value}
+                                                date={condition.filters.value ?? ""}
                                                 onDateChange={(timestamp) => {
                                                     subField.handleChange(timestamp);
                                                 }}
@@ -215,11 +243,10 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                                                             secondsDuration.toString()
                                                         );
                                                     }}
-                                                    className="w-24 bg-white"
+                                                    className="w-24 bg-white text-sm"
                                                 />
 
                                                 <span className="text-sm">days</span>
-
                                                 <Select
                                                     value={condition.filters.relative ?? "ago"}
                                                     onValueChange={(value) => {
@@ -270,16 +297,16 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                                             name={condition.id}
                                             type="text"
                                             placeholder={`Set ${condition.name}`}
-                                            value={subField.state.value ?? ""}
+                                            value={condition.filters.value ?? ""}
                                             onChange={(e) => subField.handleChange(e.target.value)}
-                                            className="bg-white flex-1"
+                                            className="bg-white flex-1 text-sm"
                                         />
                                     </>
                                 );
                             case "subscriber_tag":
                                 return (
                                     <Select
-                                        value={subField.state.value ?? ""}
+                                        value={condition.filters.value ?? ""}
                                         onValueChange={(value) => subField.handleChange(value)}>
                                         <SelectTrigger className="flex-1 bg-white">
                                             <SelectValue placeholder={`Select ${condition.name}`} />
@@ -307,15 +334,15 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                                         name={condition.id}
                                         type="text"
                                         placeholder={`Set ${condition.name}`}
-                                        value={subField.state.value ?? ""}
+                                        value={condition.filters.value ?? ""}
                                         onChange={(e) => subField.handleChange(e.target.value)}
-                                        className="bg-white flex-1"
+                                        className="bg-white flex-1 text-sm"
                                     />
                                 );
                             case "external_embed":
                                 return (
                                     <Select
-                                        value={subField.state.value ?? ""}
+                                        value={condition.filters.value ?? ""}
                                         onValueChange={(value) => subField.handleChange(value)}>
                                         <SelectTrigger className="flex-1 bg-white">
                                             <SelectValue placeholder={`Select ${condition.name}`} />
@@ -334,12 +361,13 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                             default:
                                 return (
                                     <Input
+                                        id={condition.type.toLowerCase()}
                                         name={condition.type.toLowerCase()}
                                         type="text"
-                                        className="bg-white flex-1"
                                         placeholder="Set a value"
-                                        value={subField.state.value ?? ""}
+                                        value={condition.filters.value ?? ""}
                                         onChange={(e) => subField.handleChange(e.target.value)}
+                                        className="bg-white flex-1 text-sm"
                                     />
                                 );
                         }

@@ -168,7 +168,7 @@ export const SEGMENT_ATTRIBUTES_NAMES_DROPDOWN: Record<string, ISegmentNameDropd
             }
         },
         {
-            id: "compaign",
+            id: "campaign",
             name: "UTM campaign",
             filters: {
                 operator: "equal",

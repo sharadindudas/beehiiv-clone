@@ -2,7 +2,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { SEGMENT_MAIN_OPERATORS } from "@/data/segments-data";
 import type { ICommonSegmentConditionProps } from "@/types/segments";
 
-export default function ConditionOperatorSection({ form }: ICommonSegmentConditionProps) {
+export default function ConditionOperatorSection({ form }: { form: ICommonSegmentConditionProps["form"] }) {
     return (
         <form.Field name="conditions.logical_operator">
             {(field) => (

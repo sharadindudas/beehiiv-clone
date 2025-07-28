@@ -29,15 +29,13 @@ export const COMMON_CONDITION_OPERATORS: Record<COMMON_CONDITION_OPERATORS_KEY, 
     [COMMON_CONDITION_OPERATORS_KEY.less_than]: "is before",
     [COMMON_CONDITION_OPERATORS_KEY.less_than_equal_to]: "is on or before",
     [COMMON_CONDITION_OPERATORS_KEY.not_start_with]: "did not begin with",
-    [COMMON_CONDITION_OPERATORS_KEY.not_end_with]: "did not end with",
+    [COMMON_CONDITION_OPERATORS_KEY.not_end_with]: "did not end with"
 };
-
-type OperatorOption = { id: COMMON_CONDITION_OPERATORS_KEY; name: string };
 
 export function getOperatorOptions(
     allowedOperators?: COMMON_CONDITION_OPERATORS_KEY[],
     overrides?: Partial<Record<COMMON_CONDITION_OPERATORS_KEY, string>>
-): OperatorOption[] {
+): { id: COMMON_CONDITION_OPERATORS_KEY; name: string }[] {
     const keys = allowedOperators ?? Object.values(COMMON_CONDITION_OPERATORS_KEY);
     return keys.map((op) => ({
         id: op,

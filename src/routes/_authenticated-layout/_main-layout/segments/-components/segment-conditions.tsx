@@ -20,7 +20,7 @@ const SegmentConditionsSection = () => {
         }
     });
 
-    const formValues = useStore(form.store, (state) => state.values);
+    const formValues = useStore(form.store, (state) => state.values).conditions.conditions;
     console.log(formValues);
 
     return (
@@ -38,33 +38,31 @@ const SegmentConditionsSection = () => {
             <form.Field
                 name="conditions.conditions"
                 mode="array">
-                {(field) => {
-                    return (
-                        <>
-                            {field.state.value.length === 0 ? (
-                                <div className="bg-gray-100 min-h-36 rounded-lg p-4 flex items-center justify-center font-semibold">
-                                    No Conditions Found
-                                </div>
-                            ) : (
-                                field.state.value.map((condition, index) => (
-                                    <ConditionRenderer
-                                        key={`${index}-${condition.id}`}
-                                        condition={condition}
-                                        index={index}
-                                        form={form}
-                                        field={field}
-                                    />
-                                ))
-                            )}
+                {(field) => (
+                    <>
+                        {field.state.value.length === 0 ? (
+                            <div className="bg-gray-100 min-h-36 rounded-lg p-4 flex items-center justify-center font-semibold">
+                                No Conditions Found
+                            </div>
+                        ) : (
+                            field.state.value.map((condition, index) => (
+                                <ConditionRenderer
+                                    key={`${index}-${condition.id}`}
+                                    condition={condition}
+                                    index={index}
+                                    form={form}
+                                    field={field}
+                                />
+                            ))
+                        )}
 
-                            {/* Condition Buttons */}
-                            <ConditionButtonsSection
-                                field={field}
-                                form={form}
-                            />
-                        </>
-                    );
-                }}
+                        {/* Condition Buttons */}
+                        <ConditionButtonsSection
+                            field={field}
+                            form={form}
+                        />
+                    </>
+                )}
             </form.Field>
         </form>
     );

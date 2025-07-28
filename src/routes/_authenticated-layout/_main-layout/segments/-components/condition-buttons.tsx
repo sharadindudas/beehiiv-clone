@@ -12,7 +12,13 @@ import type { ICommonSegmentConditionProps } from "@/types/segments";
 import { Plus } from "lucide-react";
 import { Fragment } from "react";
 
-export default function ConditionButtonsSection({ field, form }: ICommonSegmentConditionProps) {
+export default function ConditionButtonsSection({
+    field,
+    form
+}: {
+    field: ICommonSegmentConditionProps["field"];
+    form: ICommonSegmentConditionProps["form"];
+}) {
     return (
         <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-4">
