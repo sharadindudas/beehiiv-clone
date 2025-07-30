@@ -1,6 +1,6 @@
 import { SegmentConditionsSchema } from "@/schemas/segments";
 import { useForm, useStore } from "@tanstack/react-form";
-import ConditionButtonsSection from "./condition-buttons";
+import ConditionActionButtonsSection from "./condition-action-buttons";
 import ConditionRenderer from "./condition-renderer";
 import ConditionOperatorSection from "./condition-operator";
 
@@ -57,7 +57,7 @@ const SegmentConditionsSection = () => {
                         )}
 
                         {/* Condition Buttons */}
-                        <ConditionButtonsSection
+                        <ConditionActionButtonsSection
                             field={field}
                             form={form}
                         />

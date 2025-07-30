@@ -92,8 +92,18 @@ export const SEGMENT_CONDITIONS_CATEGORIES: Record<string, ISegmentNameDropdown[
                 filters: { operator: "equal", value: "" }
             }
         }
+    ],
+    "Automation data": [
+        {
+            id: "enrollment",
+            name: "Enrollment",
+            data: {
+                name: "Enrollment",
+                type: "automation_action",
+                filters: { operator: "equal", value: "" }
+            }
+        }
     ]
-    // "Automation data": [{ id: "enrollment", name: "Enrollment" }],
     // "Behaviour data": [
     //     { id: "referral_count", name: "Referral count" },
     //     { id: "poll_response", name: "Poll response" },
@@ -798,6 +808,30 @@ export const SEGMENT_EMAIL_ACTION_RESOURCE_ID_DROPDOWN: Record<string, ISelectIt
         {
             id: "fbbda288-7c60-45fd-9e35-6ad3gzs3ce86",
             name: "Rock Bottom Working From In Office"
+        }
+    ]
+};
+
+// Segment Automation Action Condition
+export const SEGMENT_AUTOMATION_ACTION_OPERATORS_DROPDOWN: Record<string, ISelectItem[]> = {
+    common: getOperatorOptions([COMMON_CONDITION_OPERATORS_KEY.equal, COMMON_CONDITION_OPERATORS_KEY.not_equal], {
+        [COMMON_CONDITION_OPERATORS_KEY.equal]: "was",
+        [COMMON_CONDITION_OPERATORS_KEY.not_equal]: "was not"
+    })
+};
+export const SEGMENT_AUTOMATION_ACTION_VALUE_DROPDOWN: ISelectItem[] = [
+    { id: "start", name: "Started" },
+    { id: "completed", name: "Completed" }
+];
+export const SEGMENT_AUTOMATION_ACTION_RESOURCE_ID_DROPDOWN: Record<string, ISelectItem[]> = {
+    enrollment: [
+        {
+            id: "d82edd37-79ac-4e1f-a145-f7517ec64890",
+            name: "Dummy Automation 1"
+        },
+        {
+            id: "any",
+            name: "Any Automation"
         }
     ]
 };

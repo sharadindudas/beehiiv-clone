@@ -2,6 +2,7 @@ import type { ICommonSegmentConditionProps } from "@/types/segments";
 import AttributeBloc from "./blocs/attribute-bloc";
 import MeasureBloc from "./blocs/measure-bloc";
 import EmailActionBloc from "./blocs/email-action-bloc";
+import AutomationActionBloc from "./blocs/automation-action-bloc";
 
 export default function ConditionRenderer({ index, condition, form, field }: ICommonSegmentConditionProps) {
     switch (condition.data.type) {
@@ -26,6 +27,15 @@ export default function ConditionRenderer({ index, condition, form, field }: ICo
         case "email_action":
             return (
                 <EmailActionBloc
+                    index={index}
+                    condition={condition}
+                    form={form}
+                    field={field}
+                />
+            );
+        case "automation_action":
+            return (
+                <AutomationActionBloc
                     index={index}
                     condition={condition}
                     form={form}

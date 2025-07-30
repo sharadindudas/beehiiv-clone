@@ -12,7 +12,7 @@ import type { ICommonSegmentConditionProps } from "@/types/segments";
 import { Plus } from "lucide-react";
 import { Fragment } from "react";
 
-export default function ConditionButtonsSection({
+export default function ConditionActionButtonsSection({
     field,
     form
 }: {
