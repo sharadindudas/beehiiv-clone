@@ -32,25 +32,21 @@ export default function ConditionButtonsSection({
                     <DropdownMenuContent
                         align="start"
                         className="w-48 h-48">
-                        {Object.entries(SEGMENT_CONDITIONS_CATEGORIES).map(([category, categoryTypes], index, array) => (
+                        {Object.entries(SEGMENT_CONDITIONS_CATEGORIES).map(([category, conditions], index, array) => (
                             <Fragment key={category}>
                                 <DropdownMenuLabel className="text-xs pl-1 text-gray-500">{category}</DropdownMenuLabel>
-                                {categoryTypes.map((type) => (
+                                {conditions.map((condition) => (
                                     <DropdownMenuItem
-                                        key={type.id}
+                                        key={condition.id}
                                         onClick={() => {
                                             field.pushValue({
-                                                id: "",
-                                                name: "",
+                                                id: condition.id,
+                                                name: condition.name,
                                                 category: category,
-                                                type: type.name,
-                                                filters: {
-                                                    operator: "equal",
-                                                    value: ""
-                                                }
+                                                data: condition.data
                                             });
                                         }}>
-                                        {type.name}
+                                        {condition.name}
                                     </DropdownMenuItem>
                                 ))}
                                 {index < array.length - 1 && <DropdownMenuSeparator />}

@@ -16,25 +16,89 @@ export const SEGMENT_MAIN_OPERATORS: ISelectItem[] = [
         name: "None"
     }
 ];
-export const SEGMENT_CONDITIONS_CATEGORIES: Record<string, ISelectItem[]> = {
+export const SEGMENT_CONDITIONS_CATEGORIES: Record<string, ISegmentNameDropdown[]> = {
     "Subscriber data": [
-        { id: "attribute", name: "Attribute" },
-        { id: "measure", name: "Engagement" }
+        {
+            id: "attribute",
+            name: "Attribute",
+            data: {
+                name: "Attribute",
+                type: "attribute",
+                filters: { operator: "equal", value: "" }
+            }
+        },
+        {
+            id: "measure",
+            name: "Engagement",
+            data: {
+                name: "Engagement",
+                type: "measure",
+                filters: { operator: "equal", value: "" }
+            }
+        }
     ],
     "Email data": [
-        { id: "any_email", name: "Any Email" },
-        { id: "automation_email", name: "Automation Email" },
-        { id: "email_to_segment", name: "Email to a segment" },
-        { id: "post", name: "Post" },
-        { id: "welcome_email", name: "Welcome email" },
-        { id: "opt_in_email", name: "Opt-in email" }
-    ],
-    "Automation data": [{ id: "enrollment", name: "Enrollment" }],
-    "Behaviour data": [
-        { id: "referral_count", name: "Referral count" },
-        { id: "poll_response", name: "Poll response" },
-        { id: "survey_response", name: "Survey response" }
+        {
+            id: "all",
+            name: "Any Email",
+            data: {
+                name: "Any Email",
+                type: "email_action",
+                filters: { operator: "equal", value: "" }
+            }
+        },
+        {
+            id: "automation_email",
+            name: "Automation Email",
+            data: {
+                name: "Automation Email",
+                type: "email_action",
+                filters: { operator: "equal", value: "" }
+            }
+        },
+        {
+            id: "email_to_segment",
+            name: "Email to a segment",
+            data: {
+                name: "Email to a segment",
+                type: "email_action",
+                filters: { operator: "equal", value: "" }
+            }
+        },
+        {
+            id: "post",
+            name: "Post",
+            data: {
+                name: "Post",
+                type: "email_action",
+                filters: { operator: "equal", value: "" }
+            }
+        },
+        {
+            id: "welcome_email",
+            name: "Welcome email",
+            data: {
+                name: "Welcome email",
+                type: "email_action",
+                filters: { operator: "equal", value: "" }
+            }
+        },
+        {
+            id: "opt_in_email",
+            name: "Opt-in email",
+            data: {
+                name: "Opt-in email",
+                type: "email_action",
+                filters: { operator: "equal", value: "" }
+            }
+        }
     ]
+    // "Automation data": [{ id: "enrollment", name: "Enrollment" }],
+    // "Behaviour data": [
+    //     { id: "referral_count", name: "Referral count" },
+    //     { id: "poll_response", name: "Poll response" },
+    //     { id: "survey_response", name: "Survey response" }
+    // ]
 };
 
 // Segment Attribute Condition
@@ -43,76 +107,82 @@ export const SEGMENT_ATTRIBUTES_NAMES_DROPDOWN: Record<string, ISegmentNameDropd
         {
             id: "email",
             name: "Email",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "Email",
+                type: "attribute",
+                filters: { operator: "equal", value: "" }
             }
         },
         {
             id: "status",
             name: "Status",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "Status",
+                type: "attribute",
+                filters: { operator: "equal", value: "" }
             }
         },
         {
             id: "tier",
             name: "Tier",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "Tier",
+                type: "attribute",
+                filters: { operator: "equal", value: "" }
             }
         },
         {
             id: "tier_interval",
             name: "Tier plan",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "Tier plan",
+                type: "attribute",
+                filters: { operator: "equal", value: "" }
             }
         },
         {
             id: "free_trial",
             name: "Free trial",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "Free trial",
+                type: "attribute",
+                filters: { operator: "equal", value: "" }
             }
         },
         {
             id: "signup_date",
             name: "Signup date",
-            filters: {
-                operator: "greater_than",
-                value: "",
-                date_type: "specific"
+            data: {
+                name: "Signup date",
+                type: "attribute",
+                filters: { operator: "greater_than", value: "", date_type: "specific" }
             }
         },
         {
             id: "unsub_date",
             name: "Unsubscribe date",
-            filters: {
-                operator: "greater_than",
-                value: "",
-                date_type: "specific"
+            data: {
+                name: "Unsubscribe date",
+                type: "attribute",
+                filters: { operator: "greater_than", value: "", date_type: "specific" }
             }
         },
         {
             id: "custom_field",
             name: "Custom field",
-            filters: {
-                operator: "equal",
-                value: "",
-                resource_id: ""
+            data: {
+                name: "Custom field",
+                type: "attribute",
+                filters: { operator: "equal", value: "", resource_id: "" }
             }
         },
         {
             id: "subscriber_tag",
             name: "Subscriber tags",
-            filters: {
-                operator: "contain",
-                value: ""
+            data: {
+                name: "Subscriber tags",
+                type: "attribute",
+                filters: { operator: "contain", value: "" }
             }
         }
     ],
@@ -120,25 +190,30 @@ export const SEGMENT_ATTRIBUTES_NAMES_DROPDOWN: Record<string, ISegmentNameDropd
         {
             id: "latest_location/city",
             name: "City",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "City",
+                type: "attribute",
+
+                filters: { operator: "equal", value: "" }
             }
         },
         {
             id: "latest_location/state",
             name: "State",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "State",
+                type: "attribute",
+                filters: { operator: "equal", value: "" }
             }
         },
         {
             id: "latest_location/country",
             name: "Country",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "Country",
+                type: "attribute",
+
+                filters: { operator: "equal", value: "" }
             }
         }
     ],
@@ -146,54 +221,61 @@ export const SEGMENT_ATTRIBUTES_NAMES_DROPDOWN: Record<string, ISegmentNameDropd
         {
             id: "channel",
             name: "Channel",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "Channel",
+                type: "attribute",
+                filters: { operator: "equal", value: "" }
             }
         },
         {
             id: "source",
             name: "UTM source",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "UTM source",
+                type: "attribute",
+
+                filters: { operator: "equal", value: "" }
             }
         },
         {
             id: "medium",
             name: "UTM medium",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "UTM medium",
+                type: "attribute",
+                filters: { operator: "equal", value: "" }
             }
         },
         {
             id: "campaign",
             name: "UTM campaign",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "UTM campaign",
+                type: "attribute",
+                filters: { operator: "equal", value: "" }
             }
         },
         {
             id: "referring_url",
             name: "Referring URL",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "Referring URL",
+                type: "attribute",
+                filters: { operator: "equal", value: "" }
             }
         },
         {
             id: "external_embed",
             name: "Embed source",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "Embed source",
+                type: "attribute",
+                filters: { operator: "equal", value: "" }
             }
         }
     ]
 };
-export const SEGMENT_ATTRIBUTES_OPERATORS_DROPDOWN = {
+export const SEGMENT_ATTRIBUTES_OPERATORS_DROPDOWN: Record<string, ISelectItem[]> = {
     common: getOperatorOptions([
         COMMON_CONDITION_OPERATORS_KEY.equal,
         COMMON_CONDITION_OPERATORS_KEY.not_equal,
@@ -558,65 +640,73 @@ export const SEGMENT_ENGAGEMENT_NAMES_DROPDOWN: Record<string, ISegmentNameDropd
         {
             id: "unique_opens",
             name: "Unique opens",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "Unique opens",
+                type: "measure",
+                filters: { operator: "equal", value: "" }
             }
         },
         {
             id: "open_rate",
             name: "Open rate",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "Open rate",
+                type: "measure",
+                filters: { operator: "equal", value: "" }
             }
         },
         {
             id: "unique_clicks",
             name: "Unique clicks",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "Unique clicks",
+                type: "measure",
+                filters: { operator: "equal", value: "" }
             }
         },
         {
             id: "verified_unique_clicks",
             name: "Verified unique clicks",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "Verified unique clicks",
+                type: "measure",
+                filters: { operator: "equal", value: "" }
             }
         },
         {
             id: "click_through_rate",
             name: "Click through rate",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "Click through rate",
+                type: "measure",
+                filters: { operator: "equal", value: "" }
             }
         },
         {
             id: "verified_click_through_rate",
             name: "Verified click through rate",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "Verified click through rate",
+                type: "measure",
+                filters: { operator: "equal", value: "" }
             }
         },
         {
             id: "unique_sends",
             name: "Unique sends",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "Unique sends",
+                type: "measure",
+                filters: { operator: "equal", value: "" }
             }
         },
         {
             id: "link_click",
             name: "Link click",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "Link click",
+                type: "measure",
+                filters: { operator: "equal", value: "" }
             }
         }
     ],
@@ -624,23 +714,24 @@ export const SEGMENT_ENGAGEMENT_NAMES_DROPDOWN: Record<string, ISegmentNameDropd
         {
             id: "deferred",
             name: "Deferred",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "Deferred",
+                type: "measure",
+                filters: { operator: "equal", value: "" }
             }
         },
         {
             id: "bounce",
             name: "Bounced",
-            filters: {
-                operator: "equal",
-                value: ""
+            data: {
+                name: "Bounced",
+                type: "measure",
+                filters: { operator: "equal", value: "" }
             }
-        },
-       
+        }
     ]
 };
-export const SEGMENT_ENGAGEMENT_OPERATORS_DROPDOWN = {
+export const SEGMENT_ENGAGEMENT_OPERATORS_DROPDOWN: Record<string, ISelectItem[]> = {
     common: getOperatorOptions(
         [
             COMMON_CONDITION_OPERATORS_KEY.equal,
@@ -681,4 +772,31 @@ export const SEGMENT_ENGAGEMENT_OPERATORS_DROPDOWN = {
             [COMMON_CONDITION_OPERATORS_KEY.not_end_with]: "did not end with"
         }
     )
+};
+
+// Segment Email Action Condition
+export const SEGMENT_EMAIL_ACTION_OPERATORS_DROPDOWN: Record<string, ISelectItem[]> = {
+    common: getOperatorOptions([COMMON_CONDITION_OPERATORS_KEY.equal, COMMON_CONDITION_OPERATORS_KEY.not_equal], {
+        [COMMON_CONDITION_OPERATORS_KEY.equal]: "was",
+        [COMMON_CONDITION_OPERATORS_KEY.not_equal]: "was not"
+    })
+};
+export const SEGMENT_EMAIL_ACTION_VALUE_DROPDOWN: ISelectItem[] = [
+    { id: "sent", name: "Sent" },
+    { id: "received", name: "Received" },
+    { id: "opened", name: "Opened" },
+    { id: "clicked", name: "Clicked" },
+    { id: "verified_click", name: "Verified Click" }
+];
+export const SEGMENT_EMAIL_ACTION_RESOURCE_ID_DROPDOWN: Record<string, ISelectItem[]> = {
+    post: [
+        {
+            id: "fbbda288-7c60-45fd-9e35-6ace1ff3ce86",
+            name: "Ava Sinclair on Working Remotely While Traveling"
+        },
+        {
+            id: "fbbda288-7c60-45fd-9e35-6ad3gzs3ce86",
+            name: "Rock Bottom Working From In Office"
+        }
+    ]
 };

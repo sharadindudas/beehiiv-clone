@@ -2,18 +2,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SEGMENT_ENGAGEMENT_NAMES_DROPDOWN, SEGMENT_ENGAGEMENT_OPERATORS_DROPDOWN } from "@/data/segments-data";
-import type { SegmentConditionSchema } from "@/schemas/segments";
+import type { SegmentFilterSchema } from "@/schemas/segments";
 import type { ICommonSegmentConditionProps } from "@/types/segments";
 import { ArrowRight, Trash2 } from "lucide-react";
 
-export default function EngagementBloc({ index, condition, form }: ICommonSegmentConditionProps) {
+export default function MeasureBloc({ index, condition, form }: ICommonSegmentConditionProps) {
     return (
         <div className="bg-gray-100 p-4 rounded-lg flex-1">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1 text-sm mb-2">
                     {condition.category}
                     <ArrowRight size={16} />
-                    {condition.type}
+                    {condition.data.name}
                 </div>
                 <Button
                     onClick={() => form.removeFieldValue("conditions.conditions", index)}
@@ -27,20 +27,17 @@ export default function EngagementBloc({ index, condition, form }: ICommonSegmen
                 <form.Field name={`conditions.conditions[${index}].id`}>
                     {(subField) => (
                         <Select
-                            value={subField.state.value}
+                            value={subField.state.value?.includes("measure") ? "" : subField.state.value}
                             onValueChange={(value) => {
                                 const selectedName = Object.values(SEGMENT_ENGAGEMENT_NAMES_DROPDOWN)
                                     .flat()
                                     .find((item) => item.id === value);
                                 form.setFieldValue(`conditions.conditions[${index}].id`, selectedName?.id ?? "");
                                 form.setFieldValue(`conditions.conditions[${index}].name`, selectedName?.name ?? "");
-                                form.setFieldValue(
-                                    `conditions.conditions[${index}].filters`,
-                                    selectedName?.filters as SegmentConditionSchema["filters"]
-                                );
+                                form.setFieldValue(`conditions.conditions[${index}].data.filters`, selectedName?.data.filters as SegmentFilterSchema);
                             }}>
                             <SelectTrigger className="flex-1 bg-white">
-                                <SelectValue placeholder={`Select ${condition.type}`} />
+                                <SelectValue placeholder={`Select ${condition.data.name}`} />
                             </SelectTrigger>
                             <SelectContent className="h-48">
                                 {Object.entries(SEGMENT_ENGAGEMENT_NAMES_DROPDOWN).map(([heading, allNames]) => (
@@ -61,7 +58,7 @@ export default function EngagementBloc({ index, condition, form }: ICommonSegmen
                 </form.Field>
 
                 {/* Condition Operator */}
-                <form.Field name={`conditions.conditions[${index}].filters.operator`}>
+                <form.Field name={`conditions.conditions[${index}].data.filters.operator`}>
                     {(subField) => {
                         let operatorList = SEGMENT_ENGAGEMENT_OPERATORS_DROPDOWN.common;
                         if (
@@ -103,7 +100,7 @@ export default function EngagementBloc({ index, condition, form }: ICommonSegmen
                 </form.Field>
 
                 {/* Condition Value */}
-                <form.Field name={`conditions.conditions[${index}].filters.value`}>
+                <form.Field name={`conditions.conditions[${index}].data.filters.value`}>
                     {(subField) => {
                         switch (condition.id) {
                             case "unique_opens":
@@ -119,7 +116,7 @@ export default function EngagementBloc({ index, condition, form }: ICommonSegmen
                                         name={condition.id}
                                         type="number"
                                         placeholder={`Set ${condition.name}`}
-                                        value={condition.filters.value ?? ""}
+                                        value={condition.data.filters.value ?? ""}
                                         onChange={(e) => subField.handleChange(e.target.value)}
                                         className="bg-white flex-1"
                                     />
@@ -135,7 +132,7 @@ export default function EngagementBloc({ index, condition, form }: ICommonSegmen
                                         min={0}
                                         max={100}
                                         placeholder={`Set ${condition.name}`}
-                                        value={condition.filters.value ?? ""}
+                                        value={condition.data.filters.value ?? ""}
                                         onChange={(e) => {
                                             let value = e.target.value;
                                             const num = Number(value);
@@ -154,12 +151,12 @@ export default function EngagementBloc({ index, condition, form }: ICommonSegmen
                             default:
                                 return (
                                     <Input
-                                        id={condition.type.toLowerCase()}
-                                        name={condition.type.toLowerCase()}
+                                        id={condition.data.name}
+                                        name={condition.data.name}
                                         type="text"
                                         className="bg-white flex-1"
                                         placeholder="Set a value"
-                                        value={condition.filters.value ?? ""}
+                                        value={condition.data.filters.value ?? ""}
                                         onChange={(e) => subField.handleChange(e.target.value)}
                                     />
                                 );

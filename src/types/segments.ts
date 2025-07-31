@@ -4,7 +4,7 @@ import type { FieldApi, ReactFormExtendedApi } from "@tanstack/react-form";
 export interface ISegmentNameDropdown {
     id: string;
     name: string;
-    filters: SegmentConditionSchema["filters"];
+    data: SegmentConditionSchema["data"];
 }
 
 export interface ICommonSegmentConditionProps {

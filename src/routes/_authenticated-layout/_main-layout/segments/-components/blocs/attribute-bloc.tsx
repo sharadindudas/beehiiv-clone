@@ -8,7 +8,7 @@ import {
     SEGMENT_ATTRIBUTES_VALUE_DROPDOWN,
     SEGMENT_ATTRIBUTE_DATE_TYPE_DROPDOWN
 } from "@/data/segments-data";
-import type { SegmentConditionSchema } from "@/schemas/segments";
+import type { SegmentFilterSchema } from "@/schemas/segments";
 import type { ICommonSegmentConditionProps } from "@/types/segments";
 import { getRelativeUnixDuration } from "@/utils/common";
 import { ArrowRight, Trash2 } from "lucide-react";
@@ -20,7 +20,7 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                 <div className="flex items-center gap-1 text-sm mb-2">
                     {condition.category}
                     <ArrowRight size={16} />
-                    {condition.type}
+                    {condition.data.name}
                 </div>
                 <Button
                     onClick={() => form.removeFieldValue("conditions.conditions", index)}
@@ -34,20 +34,17 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                 <form.Field name={`conditions.conditions[${index}].id`}>
                     {(subField) => (
                         <Select
-                            value={subField.state.value}
+                            value={subField.state.value?.includes("attribute") ? "" : subField.state.value}
                             onValueChange={(value) => {
                                 const selectedName = Object.values(SEGMENT_ATTRIBUTES_NAMES_DROPDOWN)
                                     .flat()
                                     .find((item) => item.id === value);
                                 form.setFieldValue(`conditions.conditions[${index}].id`, selectedName?.id ?? "");
                                 form.setFieldValue(`conditions.conditions[${index}].name`, selectedName?.name ?? "");
-                                form.setFieldValue(
-                                    `conditions.conditions[${index}].filters`,
-                                    selectedName?.filters as SegmentConditionSchema["filters"]
-                                );
+                                form.setFieldValue(`conditions.conditions[${index}].data.filters`, selectedName?.data.filters as SegmentFilterSchema);
                             }}>
                             <SelectTrigger className="flex-1 bg-white">
-                                <SelectValue placeholder={`Select ${condition.type}`} />
+                                <SelectValue placeholder={`Select ${condition.data.name}`} />
                             </SelectTrigger>
                             <SelectContent className="h-48">
                                 {Object.entries(SEGMENT_ATTRIBUTES_NAMES_DROPDOWN).map(([heading, allNames]) => (
@@ -68,7 +65,7 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                 </form.Field>
 
                 {/* Condition Operator */}
-                <form.Field name={`conditions.conditions[${index}].filters.operator`}>
+                <form.Field name={`conditions.conditions[${index}].data.filters.operator`}>
                     {(subField) => {
                         let operatorList = SEGMENT_ATTRIBUTES_OPERATORS_DROPDOWN.common;
                         if (
@@ -120,7 +117,7 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                 </form.Field>
 
                 {/* Condition Value */}
-                <form.Field name={`conditions.conditions[${index}].filters.value`}>
+                <form.Field name={`conditions.conditions[${index}].data.filters.value`}>
                     {(subField) => {
                         const valuesDropdown = SEGMENT_ATTRIBUTES_VALUE_DROPDOWN[condition.id];
                         switch (condition.id) {
@@ -131,7 +128,7 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                                         name={condition.id}
                                         type="email"
                                         placeholder={`Set ${condition.name}`}
-                                        value={condition.filters.value ?? ""}
+                                        value={condition.data.filters.value ?? ""}
                                         onChange={(e) => subField.handleChange(e.target.value)}
                                         className="bg-white flex-1 text-sm"
                                     />
@@ -144,7 +141,7 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                             case "channel":
                                 return (
                                     <Select
-                                        value={condition.filters.value ?? ""}
+                                        value={condition.data.filters.value ?? ""}
                                         onValueChange={(value) => subField.handleChange(value)}>
                                         <SelectTrigger className="flex-1 bg-white">
                                             <SelectValue placeholder={`Select ${condition.name}`} />
@@ -165,39 +162,48 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                                 return (
                                     <>
                                         <Select
-                                            value={condition.filters.date_type ?? ""}
+                                            value={condition.data.filters.date_type ?? ""}
                                             onValueChange={(value) => {
                                                 const updatedConditions = [...field.state.value];
                                                 if (value === "specific") {
                                                     const defaultFilter = Object.values(SEGMENT_ATTRIBUTES_NAMES_DROPDOWN)
                                                         .flat()
-                                                        .find((item) => item.id === condition.id)?.filters;
+                                                        .find((item) => item.id === condition.id)?.data.filters;
                                                     updatedConditions[index] = {
                                                         ...condition,
-                                                        filters: {
-                                                            ...defaultFilter,
-                                                            date_type: "specific"
-                                                        } as SegmentConditionSchema["filters"]
+                                                        data: {
+                                                            ...condition.data,
+                                                            filters: {
+                                                                ...defaultFilter,
+                                                                date_type: "specific"
+                                                            }
+                                                        }
                                                     };
                                                 } else if (value === "relative") {
                                                     updatedConditions[index] = {
                                                         ...condition,
-                                                        filters: {
-                                                            operator: "greater_than",
-                                                            date_type: "relative",
-                                                            relative_amount: "1",
-                                                            relative: "ago",
-                                                            value: getRelativeUnixDuration("1").toString()
-                                                        } as SegmentConditionSchema["filters"]
+                                                        data: {
+                                                            ...condition.data,
+                                                            filters: {
+                                                                operator: "greater_than",
+                                                                date_type: "relative",
+                                                                relative_amount: "1",
+                                                                relative: "ago",
+                                                                value: getRelativeUnixDuration("1").toString()
+                                                            }
+                                                        }
                                                     };
                                                 } else {
                                                     updatedConditions[index] = {
                                                         ...condition,
-                                                        filters: {
-                                                            ...condition.filters,
-                                                            date_type: value,
-                                                            value: ""
-                                                        } as SegmentConditionSchema["filters"]
+                                                        data: {
+                                                            ...condition.data,
+                                                            filters: {
+                                                                ...condition.data.filters,
+                                                                date_type: value,
+                                                                value: ""
+                                                            }
+                                                        }
                                                     };
                                                 }
                                                 field.handleChange(updatedConditions);
@@ -216,16 +222,16 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                                             </SelectContent>
                                         </Select>
 
-                                        {condition.filters.date_type === "specific" && (
+                                        {condition.data.filters.date_type === "specific" && (
                                             <CustomDateTimePicker
-                                                date={condition.filters.value ?? ""}
+                                                date={condition.data.filters.value ?? ""}
                                                 onDateChange={(timestamp) => {
                                                     subField.handleChange(timestamp);
                                                 }}
                                             />
                                         )}
 
-                                        {condition.filters.date_type === "relative" && (
+                                        {condition.data.filters.date_type === "relative" && (
                                             <div className="flex items-center gap-2">
                                                 <span>of</span>
                                                 <Input
@@ -234,12 +240,15 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                                                     type="number"
                                                     min={0}
                                                     placeholder="Amount"
-                                                    value={condition.filters.relative_amount ?? "1"}
+                                                    value={condition.data.filters.relative_amount ?? "1"}
                                                     onChange={(e) => {
                                                         const secondsDuration = getRelativeUnixDuration(e.target.value);
-                                                        form.setFieldValue(`conditions.conditions[${index}].filters.relative_amount`, e.target.value);
                                                         form.setFieldValue(
-                                                            `conditions.conditions[${index}].filters.value`,
+                                                            `conditions.conditions[${index}].data.filters.relative_amount`,
+                                                            e.target.value
+                                                        );
+                                                        form.setFieldValue(
+                                                            `conditions.conditions[${index}].data.filters.value`,
                                                             secondsDuration.toString()
                                                         );
                                                     }}
@@ -248,13 +257,13 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
 
                                                 <span className="text-sm">days</span>
                                                 <Select
-                                                    value={condition.filters.relative ?? "ago"}
+                                                    value={condition.data.filters.relative ?? "ago"}
                                                     onValueChange={(value) => {
-                                                        const amount = condition.filters.relative_amount ?? "1";
+                                                        const amount = condition.data.filters.relative_amount ?? "1";
                                                         const secondsDuration = getRelativeUnixDuration(amount);
-                                                        form.setFieldValue(`conditions.conditions[${index}].filters.relative`, value);
+                                                        form.setFieldValue(`conditions.conditions[${index}].data.filters.relative`, value);
                                                         form.setFieldValue(
-                                                            `conditions.conditions[${index}].filters.value`,
+                                                            `conditions.conditions[${index}].data.filters.value`,
                                                             secondsDuration.toString()
                                                         );
                                                     }}>
@@ -274,9 +283,9 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                                 return (
                                     <>
                                         <Select
-                                            value={condition.filters.resource_id ?? ""}
+                                            value={condition.data.filters.resource_id ?? ""}
                                             onValueChange={(value) => {
-                                                form.setFieldValue(`conditions.conditions[${index}].filters.resource_id`, value);
+                                                form.setFieldValue(`conditions.conditions[${index}].data.filters.resource_id`, value);
                                             }}>
                                             <SelectTrigger className="flex-1 bg-white">
                                                 <SelectValue placeholder={`Select ${condition.name}`} />
@@ -297,7 +306,7 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                                             name={condition.id}
                                             type="text"
                                             placeholder={`Set ${condition.name}`}
-                                            value={condition.filters.value ?? ""}
+                                            value={condition.data.filters.value ?? ""}
                                             onChange={(e) => subField.handleChange(e.target.value)}
                                             className="bg-white flex-1 text-sm"
                                         />
@@ -306,7 +315,7 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                             case "subscriber_tag":
                                 return (
                                     <Select
-                                        value={condition.filters.value ?? ""}
+                                        value={condition.data.filters.value ?? ""}
                                         onValueChange={(value) => subField.handleChange(value)}>
                                         <SelectTrigger className="flex-1 bg-white">
                                             <SelectValue placeholder={`Select ${condition.name}`} />
@@ -334,7 +343,7 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                                         name={condition.id}
                                         type="text"
                                         placeholder={`Set ${condition.name}`}
-                                        value={condition.filters.value ?? ""}
+                                        value={condition.data.filters.value ?? ""}
                                         onChange={(e) => subField.handleChange(e.target.value)}
                                         className="bg-white flex-1 text-sm"
                                     />
@@ -342,7 +351,7 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                             case "external_embed":
                                 return (
                                     <Select
-                                        value={condition.filters.value ?? ""}
+                                        value={condition.data.filters.value ?? ""}
                                         onValueChange={(value) => subField.handleChange(value)}>
                                         <SelectTrigger className="flex-1 bg-white">
                                             <SelectValue placeholder={`Select ${condition.name}`} />
@@ -361,11 +370,11 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                             default:
                                 return (
                                     <Input
-                                        id={condition.type.toLowerCase()}
-                                        name={condition.type.toLowerCase()}
+                                        id={condition.data.name}
+                                        name={condition.data.name}
                                         type="text"
                                         placeholder="Set a value"
-                                        value={condition.filters.value ?? ""}
+                                        value={condition.data.filters.value ?? ""}
                                         onChange={(e) => subField.handleChange(e.target.value)}
                                         className="bg-white flex-1 text-sm"
                                     />
