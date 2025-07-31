@@ -12,7 +12,9 @@ export enum COMMON_CONDITION_OPERATORS_KEY {
     less_than = "less_than",
     less_than_equal_to = "less_than_equal_to",
     not_start_with = "not_start_with",
-    not_end_with = "not_end_with"
+    not_end_with = "not_end_with",
+    submitted = "submitted",
+    not_submitted = "not_submitted"
 }
 
 export const COMMON_CONDITION_OPERATORS: Record<COMMON_CONDITION_OPERATORS_KEY, string> = {
@@ -29,7 +31,9 @@ export const COMMON_CONDITION_OPERATORS: Record<COMMON_CONDITION_OPERATORS_KEY, 
     [COMMON_CONDITION_OPERATORS_KEY.less_than]: "is before",
     [COMMON_CONDITION_OPERATORS_KEY.less_than_equal_to]: "is on or before",
     [COMMON_CONDITION_OPERATORS_KEY.not_start_with]: "did not begin with",
-    [COMMON_CONDITION_OPERATORS_KEY.not_end_with]: "did not end with"
+    [COMMON_CONDITION_OPERATORS_KEY.not_end_with]: "did not end with",
+    [COMMON_CONDITION_OPERATORS_KEY.submitted]: "was submitted",
+    [COMMON_CONDITION_OPERATORS_KEY.not_submitted]: "was not submitted"
 };
 
 export function getOperatorOptions(

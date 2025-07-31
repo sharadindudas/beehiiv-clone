@@ -103,12 +103,36 @@ export const SEGMENT_CONDITIONS_CATEGORIES: Record<string, ISegmentNameDropdown[
                 filters: { operator: "equal", value: "" }
             }
         }
+    ],
+    "Behaviour data": [
+        {
+            id: "referral_count",
+            name: "Referral count",
+            data: {
+                name: "Referral count",
+                type: "behaviour_action",
+                filters: { operator: "equal", value: "" }
+            }
+        },
+        {
+            id: "poll_response",
+            name: "Poll response",
+            data: {
+                name: "Poll response",
+                type: "behaviour_action",
+                filters: { operator: "submitted", value: "" }
+            }
+        },
+        {
+            id: "survey_response",
+            name: "Survey response",
+            data: {
+                name: "Referral count",
+                type: "behaviour_action",
+                filters: { operator: "equal", value: "" }
+            }
+        }
     ]
-    // "Behaviour data": [
-    //     { id: "referral_count", name: "Referral count" },
-    //     { id: "poll_response", name: "Poll response" },
-    //     { id: "survey_response", name: "Survey response" }
-    // ]
 };
 
 // Segment Attribute Condition
@@ -635,7 +659,6 @@ export const SEGMENT_ATTRIBUTES_VALUE_DROPDOWN: Record<string, ISelectItem[]> = 
         }
     ]
 };
-
 export const SEGMENT_ATTRIBUTE_DATE_TYPE_DROPDOWN: ISelectItem[] = [
     { id: "specific", name: "a specific date" },
     { id: "relative", name: "a relative date" }
@@ -834,4 +857,27 @@ export const SEGMENT_AUTOMATION_ACTION_RESOURCE_ID_DROPDOWN: Record<string, ISel
             name: "Any Automation"
         }
     ]
+};
+
+// Segment Behaviour Action Condition
+export const SEGMENT_BEHAVIOUR_ACTION_OPERATORS_DROPDOWN: Record<string, ISelectItem[]> = {
+    common: getOperatorOptions([COMMON_CONDITION_OPERATORS_KEY.submitted, COMMON_CONDITION_OPERATORS_KEY.not_submitted]),
+    referral: getOperatorOptions(
+        [
+            COMMON_CONDITION_OPERATORS_KEY.equal,
+            COMMON_CONDITION_OPERATORS_KEY.not_equal,
+            COMMON_CONDITION_OPERATORS_KEY.greater_than,
+            COMMON_CONDITION_OPERATORS_KEY.greater_than_equal_to,
+            COMMON_CONDITION_OPERATORS_KEY.less_than,
+            COMMON_CONDITION_OPERATORS_KEY.less_than_equal_to
+        ],
+        {
+            [COMMON_CONDITION_OPERATORS_KEY.equal]: "is exactly",
+            [COMMON_CONDITION_OPERATORS_KEY.not_equal]: "is not exactly",
+            [COMMON_CONDITION_OPERATORS_KEY.greater_than]: "is greater than",
+            [COMMON_CONDITION_OPERATORS_KEY.greater_than_equal_to]: "is greater than or equal to",
+            [COMMON_CONDITION_OPERATORS_KEY.less_than]: "is less than",
+            [COMMON_CONDITION_OPERATORS_KEY.less_than_equal_to]: "is less than or equal to"
+        }
+    )
 };

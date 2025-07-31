@@ -4,8 +4,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import {
     SEGMENT_AUTOMATION_ACTION_OPERATORS_DROPDOWN,
     SEGMENT_AUTOMATION_ACTION_RESOURCE_ID_DROPDOWN,
-    SEGMENT_AUTOMATION_ACTION_VALUE_DROPDOWN,
-    SEGMENT_EMAIL_ACTION_VALUE_DROPDOWN
+    SEGMENT_AUTOMATION_ACTION_VALUE_DROPDOWN
 } from "@/data/segments-data";
 import type { ISelectItem } from "@/types/common";
 import type { ICommonSegmentConditionProps } from "@/types/segments";
