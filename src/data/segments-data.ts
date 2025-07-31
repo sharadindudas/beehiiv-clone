@@ -317,33 +317,33 @@ export const SEGMENT_ATTRIBUTES_VALUE_DROPDOWN: Record<string, ISelectItem[]> = 
     free_trial: [{ id: "active", name: "Active" }],
     custom_field: [
         {
-            id: crypto.randomUUID(),
+            id: "5a34f1c0-abb0-43de-8107-6b26a0f7d1f1",
             name: "Random Custom Field Name 1"
         },
         {
-            id: crypto.randomUUID(),
+            id: "c3a6a202-fb11-4de0-8c89-1c2b31497d6b",
             name: "Random Custom Field Name 2"
         },
         {
-            id: crypto.randomUUID(),
+            id: "e57e1b82-6e67-43a6-9089-c7c18d8e8c13",
             name: "Random Custom Field Name 3"
         }
     ],
     subscriber_tag: [
         {
-            id: crypto.randomUUID(),
+            id: "7fc5a70b-33e4-4f08-8f30-bdd4df7a63d6",
             name: "dummy subscriber tag 1"
         },
         {
-            id: crypto.randomUUID(),
+            id: "0923c4cc-38a9-44b1-96e5-6c4df6b144a2",
             name: "dummy subscriber tag 2"
         },
         {
-            id: crypto.randomUUID(),
+            id: "45ed2e1f-d401-4aa5-8a08-9dd2f1fa8462",
             name: "dummy subscriber tag 3"
         },
         {
-            id: crypto.randomUUID(),
+            id: "ee98e3e6-56db-4b80-bd15-4a8b4e4e5e4c",
             name: "dummy subscriber tag 4"
         }
     ],
@@ -612,19 +612,20 @@ export const SEGMENT_ATTRIBUTES_VALUE_DROPDOWN: Record<string, ISelectItem[]> = 
     ],
     external_embed: [
         {
-            id: crypto.randomUUID(),
+            id: "f09d6be5-c845-41cf-91c6-7d2dfd4a4c1a",
             name: "New Subscribe form 1"
         },
         {
-            id: crypto.randomUUID(),
+            id: "82a52f7c-1c43-4de5-98bb-c13b41c7a3dc",
             name: "New Subscribe form 2"
         },
         {
-            id: crypto.randomUUID(),
+            id: "af2e801b-6107-4fef-92aa-dba34b2014de",
             name: "New Subscribe form 3"
         }
     ]
 };
+
 export const SEGMENT_ATTRIBUTE_DATE_TYPE_DROPDOWN: ISelectItem[] = [
     { id: "specific", name: "a specific date" },
     { id: "relative", name: "a relative date" }
