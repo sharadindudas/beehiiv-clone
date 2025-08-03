@@ -93,7 +93,7 @@ export default function AutomationActionBloc({ index, condition, form }: ICommon
                                                 <SelectValue placeholder="Select an action" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                {SEGMENT_AUTOMATION_ACTION_VALUE_DROPDOWN.map((item) => (
+                                                {SEGMENT_AUTOMATION_ACTION_VALUE_DROPDOWN.enrollment.map((item) => (
                                                     <SelectItem
                                                         key={item.id}
                                                         value={item.id}>

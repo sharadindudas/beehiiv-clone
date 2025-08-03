@@ -11,9 +11,9 @@ import type { ICommonSegmentConditionProps } from "@/types/segments";
 import { ArrowRight, Trash2 } from "lucide-react";
 
 export default function EmailActionBloc({ index, condition, form }: ICommonSegmentConditionProps) {
-    const AUTOMATION_EMAIL_DATA: ISelectItem[] | [] = [];
-    const EMAIL_SEGMENTS_DATA: ISelectItem[] | [] = [];
-    const POSTS: ISelectItem[] | [] = SEGMENT_EMAIL_ACTION_RESOURCE_ID_DROPDOWN.post;
+    const automationEmails: ISelectItem[] | [] = [];
+    const emailSegments: ISelectItem[] | [] = [];
+    const posts = SEGMENT_EMAIL_ACTION_RESOURCE_ID_DROPDOWN.posts;
 
     return (
         <div className="bg-gray-100 p-4 rounded-lg flex-1">
@@ -96,10 +96,10 @@ export default function EmailActionBloc({ index, condition, form }: ICommonSegme
                                                 <SelectValue placeholder={`Select ${condition.name}`} />
                                             </SelectTrigger>
                                             <SelectContent className="text-sm">
-                                                {AUTOMATION_EMAIL_DATA.length === 0 ? (
+                                                {automationEmails.length === 0 ? (
                                                     <div className="p-3">No Automation Emails</div>
                                                 ) : (
-                                                    AUTOMATION_EMAIL_DATA.map((item) => (
+                                                    automationEmails.map((item) => (
                                                         <SelectItem
                                                             key={item.id}
                                                             value={item.id}>
@@ -140,10 +140,10 @@ export default function EmailActionBloc({ index, condition, form }: ICommonSegme
                                                 <SelectValue placeholder={`Select ${condition.name}`} />
                                             </SelectTrigger>
                                             <SelectContent className="text-sm">
-                                                {EMAIL_SEGMENTS_DATA.length === 0 ? (
+                                                {emailSegments.length === 0 ? (
                                                     <div className="p-3">No Email Segments</div>
                                                 ) : (
-                                                    EMAIL_SEGMENTS_DATA.map((item) => (
+                                                    emailSegments.map((item) => (
                                                         <SelectItem
                                                             key={item.id}
                                                             value={item.id}>
@@ -184,10 +184,10 @@ export default function EmailActionBloc({ index, condition, form }: ICommonSegme
                                                 <SelectValue placeholder={`Select ${condition.name}`} />
                                             </SelectTrigger>
                                             <SelectContent className="text-sm">
-                                                {POSTS.length === 0 ? (
+                                                {posts.length === 0 ? (
                                                     <div className="p-3">No Posts</div>
                                                 ) : (
-                                                    POSTS.map((item) => (
+                                                    posts.map((item) => (
                                                         <SelectItem
                                                             key={item.id}
                                                             value={item.id}>
