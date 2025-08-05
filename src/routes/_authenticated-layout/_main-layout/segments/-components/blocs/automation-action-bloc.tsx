@@ -1,17 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import {
-    SEGMENT_AUTOMATION_ACTION_OPERATORS_DROPDOWN,
-    SEGMENT_AUTOMATION_ACTION_RESOURCE_ID_DROPDOWN,
-    SEGMENT_AUTOMATION_ACTION_VALUE_DROPDOWN
-} from "@/data/segments-data";
-import type { ISelectItem } from "@/types/common";
+import { ALL_AUTOMATIONS } from "@/data/automations-data";
+import { SEGMENT_AUTOMATION_ACTION_OPERATORS_DROPDOWN, SEGMENT_AUTOMATION_ACTION_VALUE_DROPDOWN } from "@/data/segments-data";
 import type { ICommonSegmentConditionProps } from "@/types/segments";
 import { ArrowRight, Trash2 } from "lucide-react";
 
 export default function AutomationActionBloc({ index, condition, form }: ICommonSegmentConditionProps) {
-    const AUTOMATIONS: ISelectItem[] | [] = SEGMENT_AUTOMATION_ACTION_RESOURCE_ID_DROPDOWN.enrollment;
+    const automations = [{ id: "any", name: "Any automation" }].concat(ALL_AUTOMATIONS);
     return (
         <div className="bg-gray-100 p-4 rounded-lg flex-1">
             <div className="flex items-center justify-between">
@@ -72,10 +68,10 @@ export default function AutomationActionBloc({ index, condition, form }: ICommon
                                                 <SelectValue placeholder={`Select ${condition.name}`} />
                                             </SelectTrigger>
                                             <SelectContent className="text-sm">
-                                                {AUTOMATIONS.length === 0 ? (
+                                                {automations.length === 0 ? (
                                                     <div className="p-3">No Automations</div>
                                                 ) : (
-                                                    AUTOMATIONS.map((item) => (
+                                                    automations.map((item) => (
                                                         <SelectItem
                                                             key={item.id}
                                                             value={item.id}>

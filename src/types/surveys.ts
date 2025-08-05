@@ -1,25 +1,38 @@
 export interface ISurvey {
     id: string;
-    publication_id: string;
     name: string;
-    header: string;
     description: string;
-    input_placeholder: null;
-    button_text: string;
+    cta_text: string;
+    thank_you_message: string;
+    status: "live" | "draft" | "archived";
+    url: string;
+    form_response_count: number;
+    form_questions: IFormQuestion[];
     created_at: string;
-    updated_at: string;
-    success_message_text: null;
-    success_redirect_url: null;
-    deleted_at: null;
-    remove_email_from_redirect_url: boolean;
-    version: string;
-    config: {
-        button_color: null;
-        background_color: null;
-        text_color: null;
-        button_text_color: null;
-        header_font: null;
-        body_font: null;
-        button_font: null;
-    };
+    most_recent_response: null;
+}
+
+export interface IFormQuestion {
+    id: string;
+    order: number;
+    prompt: string;
+    required: boolean;
+    multi_select: boolean;
+    show_max_characters: boolean;
+    max_character_limit: number | null;
+    min_character_limit: number | null;
+    question_type: "free_form" | "multiple_choice" | "rating" | string;
+    custom_field: ICustomField;
+    form_question_options: IFormQuestionOption[];
+}
+
+export interface ICustomField {
+    id: string;
+    type: "string" | "number" | "date" | string;
+}
+
+export interface IFormQuestionOption {
+    id?: string;
+    label?: string;
+    value?: string;
 }

@@ -1,8 +1,6 @@
 import type { ISelectItem } from "@/types/common";
 import type { ISegmentNameDropdown } from "@/types/segments";
 import { COMMON_CONDITION_OPERATORS_KEY, getOperatorOptions } from "./common-data";
-import { ALL_AUTOMATIONS } from "./automations-data";
-import { ALL_SURVEYS } from "./surveys-data";
 
 export const SEGMENT_MAIN_OPERATORS: ISelectItem[] = [
     {
@@ -824,18 +822,6 @@ export const SEGMENT_EMAIL_ACTION_VALUE_DROPDOWN: ISelectItem[] = [
     { id: "clicked", name: "Clicked" },
     { id: "verified_click", name: "Verified Click" }
 ];
-export const SEGMENT_EMAIL_ACTION_RESOURCE_ID_DROPDOWN: Record<string, ISelectItem[]> = {
-    posts: [
-        {
-            id: "fbbda288-7c60-45fd-9e35-6ace1ff3ce86",
-            name: "Ava Sinclair on Working Remotely While Traveling"
-        },
-        {
-            id: "fbbda288-7c60-45fd-9e35-6ad3gzs3ce86",
-            name: "Rock Bottom Working From In Office"
-        }
-    ]
-};
 
 // Segment Automation Action Condition
 export const SEGMENT_AUTOMATION_ACTION_OPERATORS_DROPDOWN: Record<string, ISelectItem[]> = {
@@ -849,9 +835,6 @@ export const SEGMENT_AUTOMATION_ACTION_VALUE_DROPDOWN: Record<string, ISelectIte
         { id: "started", name: "Started" },
         { id: "completed", name: "Completed" }
     ]
-};
-export const SEGMENT_AUTOMATION_ACTION_RESOURCE_ID_DROPDOWN: Record<string, ISelectItem[]> = {
-    enrollment: [{ id: "any", name: "Any automation" }].concat(ALL_AUTOMATIONS)
 };
 
 // Segment Behaviour Action Condition
@@ -875,33 +858,4 @@ export const SEGMENT_BEHAVIOUR_ACTION_OPERATORS_DROPDOWN: Record<string, ISelect
             [COMMON_CONDITION_OPERATORS_KEY.less_than_equal_to]: "is less than or equal to"
         }
     )
-};
-export const SEGMENT_BEHAVIOUR_ACTION_VALUE_DROPDOWN: Record<string, ISelectItem[]> = {
-    polls: [
-        {
-            id: "any",
-            name: "Any poll"
-        },
-        {
-            id: "414919f9-dd03-4375-965d-4cd4f37ed696",
-            name: "Test Poll"
-        }
-    ],
-    surveys: ALL_SURVEYS
-};
-export const SEGMENT_BEHAVIOUR_ACTION_RESOURCE_ID_DROPDOWN: Record<string, ISelectItem[]> = {
-    pollchoices: [
-        {
-            id: "72758ee3-b0c2-4fb7-a9ee-1424d3feb3bb",
-            name: "Biriyani"
-        },
-        {
-            id: "d5be9973-b77c-4df4-82b0-81305ded1365",
-            name: "Fried Rice"
-        },
-        {
-            id: "0e10f659-d6a0-4140-a374-1ff58fb3a667",
-            name: "Chowmein"
-        }
-    ]
 };

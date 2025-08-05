@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ALL_POSTS } from "@/data/posts-data";
 import {
     SEGMENT_EMAIL_ACTION_OPERATORS_DROPDOWN,
-    SEGMENT_EMAIL_ACTION_RESOURCE_ID_DROPDOWN,
     SEGMENT_EMAIL_ACTION_VALUE_DROPDOWN
 } from "@/data/segments-data";
 import type { ISelectItem } from "@/types/common";
@@ -13,7 +13,7 @@ import { ArrowRight, Trash2 } from "lucide-react";
 export default function EmailActionBloc({ index, condition, form }: ICommonSegmentConditionProps) {
     const automationEmails: ISelectItem[] | [] = [];
     const emailSegments: ISelectItem[] | [] = [];
-    const posts = SEGMENT_EMAIL_ACTION_RESOURCE_ID_DROPDOWN.posts;
+    const posts = ALL_POSTS;
 
     return (
         <div className="bg-gray-100 p-4 rounded-lg flex-1">
