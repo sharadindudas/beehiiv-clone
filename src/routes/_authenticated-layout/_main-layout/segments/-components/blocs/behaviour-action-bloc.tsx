@@ -75,7 +75,7 @@ export default function BehaviourActionBloc({ index, condition, form }: ICommonS
                                                     name={condition.id}
                                                     type="number"
                                                     placeholder={`Set ${condition.name}`}
-                                                    value={condition.data.filters.value ?? ""}
+                                                    value={condition.data.filters?.value ?? ""}
                                                     onChange={(e) => subField.handleChange(e.target.value)}
                                                     className="bg-white flex-1"
                                                 />
@@ -111,7 +111,7 @@ export default function BehaviourActionBloc({ index, condition, form }: ICommonS
 
                                                     {selectedResourceId && selectedResourceId !== "any" && (
                                                         <Select
-                                                            value={condition.data.filters.value ?? ""}
+                                                            value={condition.data.filters?.value ?? ""}
                                                             onValueChange={(value) => subField.handleChange(value)}>
                                                             <SelectTrigger className="flex-1 bg-white">
                                                                 <SelectValue placeholder="Select Poll Responses" />
@@ -136,7 +136,7 @@ export default function BehaviourActionBloc({ index, condition, form }: ICommonS
                                         case "survey_response":
                                             return (
                                                 <Select
-                                                    value={condition.data.filters.value ?? ""}
+                                                    value={condition.data.filters?.value ?? ""}
                                                     onValueChange={(value) => subField.handleChange(value)}>
                                                     <SelectTrigger className="flex-1 bg-white">
                                                         <SelectValue placeholder="Select an action" />
@@ -164,7 +164,7 @@ export default function BehaviourActionBloc({ index, condition, form }: ICommonS
                                                     type="text"
                                                     className="bg-white flex-1"
                                                     placeholder="Set a value"
-                                                    value={condition.data.filters.value ?? ""}
+                                                    value={condition.data.filters?.value ?? ""}
                                                     onChange={(e) => subField.handleChange(e.target.value)}
                                                 />
                                             );

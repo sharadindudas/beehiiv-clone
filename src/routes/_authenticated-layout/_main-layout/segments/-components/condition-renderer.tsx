@@ -4,9 +4,10 @@ import AutomationActionBloc from "./blocs/automation-action-bloc";
 import EmailActionBloc from "./blocs/email-action-bloc";
 import MeasureBloc from "./blocs/measure-bloc";
 import BehaviourActionBloc from "./blocs/behaviour-action-bloc";
+import GroupBloc from "./blocs/group-bloc";
 
 export default function ConditionRenderer({ index, condition, form, field }: ICommonSegmentConditionProps) {
-    switch (condition.data.type) {
+    switch (condition.data?.type) {
         case "attribute":
             return (
                 <AttributeBloc
@@ -50,6 +51,13 @@ export default function ConditionRenderer({ index, condition, form, field }: ICo
                     condition={condition}
                     form={form}
                     field={field}
+                />
+            );
+        case "group":
+            return (
+                <GroupBloc
+                    index={index}
+                    form={form}
                 />
             );
         default:

@@ -116,7 +116,7 @@ export default function MeasureBloc({ index, condition, form }: ICommonSegmentCo
                                         name={condition.id}
                                         type="number"
                                         placeholder={`Set ${condition.name}`}
-                                        value={condition.data.filters.value ?? ""}
+                                        value={condition.data.filters?.value ?? ""}
                                         onChange={(e) => subField.handleChange(e.target.value)}
                                         className="bg-white flex-1"
                                     />
@@ -132,7 +132,7 @@ export default function MeasureBloc({ index, condition, form }: ICommonSegmentCo
                                         min={0}
                                         max={100}
                                         placeholder={`Set ${condition.name}`}
-                                        value={condition.data.filters.value ?? ""}
+                                        value={condition.data.filters?.value ?? ""}
                                         onChange={(e) => {
                                             let value = e.target.value;
                                             const num = Number(value);
@@ -156,7 +156,7 @@ export default function MeasureBloc({ index, condition, form }: ICommonSegmentCo
                                         type="text"
                                         className="bg-white flex-1"
                                         placeholder="Set a value"
-                                        value={condition.data.filters.value ?? ""}
+                                        value={condition.data.filters?.value ?? ""}
                                         onChange={(e) => subField.handleChange(e.target.value)}
                                     />
                                 );

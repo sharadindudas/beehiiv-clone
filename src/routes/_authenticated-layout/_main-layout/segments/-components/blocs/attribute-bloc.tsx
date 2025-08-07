@@ -128,7 +128,7 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                                         name={condition.id}
                                         type="email"
                                         placeholder={`Set ${condition.name}`}
-                                        value={condition.data.filters.value ?? ""}
+                                        value={condition.data.filters?.value ?? ""}
                                         onChange={(e) => subField.handleChange(e.target.value)}
                                         className="bg-white flex-1 text-sm"
                                     />
@@ -141,7 +141,7 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                             case "channel":
                                 return (
                                     <Select
-                                        value={condition.data.filters.value ?? ""}
+                                        value={condition.data.filters?.value ?? ""}
                                         onValueChange={(value) => subField.handleChange(value)}>
                                         <SelectTrigger className="flex-1 bg-white">
                                             <SelectValue placeholder={`Select ${condition.name}`} />
@@ -162,7 +162,7 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                                 return (
                                     <>
                                         <Select
-                                            value={condition.data.filters.date_type ?? ""}
+                                            value={condition.data.filters?.date_type ?? ""}
                                             onValueChange={(value) => {
                                                 const updatedConditions = [...field.state.value];
                                                 if (value === "specific") {
@@ -222,16 +222,16 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                                             </SelectContent>
                                         </Select>
 
-                                        {condition.data.filters.date_type === "specific" && (
+                                        {condition.data.filters?.date_type === "specific" && (
                                             <CustomDateTimePicker
-                                                date={condition.data.filters.value ?? ""}
+                                                date={condition.data.filters?.value ?? ""}
                                                 onDateChange={(timestamp) => {
                                                     subField.handleChange(timestamp);
                                                 }}
                                             />
                                         )}
 
-                                        {condition.data.filters.date_type === "relative" && (
+                                        {condition.data.filters?.date_type === "relative" && (
                                             <div className="flex items-center gap-2">
                                                 <span>of</span>
                                                 <Input
@@ -240,7 +240,7 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                                                     type="number"
                                                     min={0}
                                                     placeholder="Amount"
-                                                    value={condition.data.filters.relative_amount ?? "1"}
+                                                    value={condition.data.filters?.relative_amount ?? "1"}
                                                     onChange={(e) => {
                                                         const secondsDuration = getRelativeUnixDuration(e.target.value);
                                                         form.setFieldValue(
@@ -257,9 +257,9 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
 
                                                 <span className="text-sm">days</span>
                                                 <Select
-                                                    value={condition.data.filters.relative ?? "ago"}
+                                                    value={condition.data.filters?.relative ?? "ago"}
                                                     onValueChange={(value) => {
-                                                        const amount = condition.data.filters.relative_amount ?? "1";
+                                                        const amount = condition.data.filters?.relative_amount ?? "1";
                                                         const secondsDuration = getRelativeUnixDuration(amount);
                                                         form.setFieldValue(`conditions.conditions[${index}].data.filters.relative`, value);
                                                         form.setFieldValue(
@@ -283,7 +283,7 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                                 return (
                                     <>
                                         <Select
-                                            value={condition.data.filters.resource_id ?? ""}
+                                            value={condition.data.filters?.resource_id ?? ""}
                                             onValueChange={(value) => {
                                                 form.setFieldValue(`conditions.conditions[${index}].data.filters.resource_id`, value);
                                             }}>
@@ -306,7 +306,7 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                                             name={condition.id}
                                             type="text"
                                             placeholder={`Set ${condition.name}`}
-                                            value={condition.data.filters.value ?? ""}
+                                            value={condition.data.filters?.value ?? ""}
                                             onChange={(e) => subField.handleChange(e.target.value)}
                                             className="bg-white flex-1 text-sm"
                                         />
@@ -315,7 +315,7 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                             case "subscriber_tag":
                                 return (
                                     <Select
-                                        value={condition.data.filters.value ?? ""}
+                                        value={condition.data.filters?.value ?? ""}
                                         onValueChange={(value) => subField.handleChange(value)}>
                                         <SelectTrigger className="flex-1 bg-white">
                                             <SelectValue placeholder={`Select ${condition.name}`} />
@@ -343,7 +343,7 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                                         name={condition.id}
                                         type="text"
                                         placeholder={`Set ${condition.name}`}
-                                        value={condition.data.filters.value ?? ""}
+                                        value={condition.data.filters?.value ?? ""}
                                         onChange={(e) => subField.handleChange(e.target.value)}
                                         className="bg-white flex-1 text-sm"
                                     />
@@ -351,7 +351,7 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                             case "external_embed":
                                 return (
                                     <Select
-                                        value={condition.data.filters.value ?? ""}
+                                        value={condition.data.filters?.value ?? ""}
                                         onValueChange={(value) => subField.handleChange(value)}>
                                         <SelectTrigger className="flex-1 bg-white">
                                             <SelectValue placeholder={`Select ${condition.name}`} />
@@ -374,7 +374,7 @@ export default function AttributeBloc({ index, condition, form, field }: ICommon
                                         name={condition.data.name}
                                         type="text"
                                         placeholder="Set a value"
-                                        value={condition.data.filters.value ?? ""}
+                                        value={condition.data.filters?.value ?? ""}
                                         onChange={(e) => subField.handleChange(e.target.value)}
                                         className="bg-white flex-1 text-sm"
                                     />

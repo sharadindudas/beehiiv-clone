@@ -68,7 +68,7 @@ export default function EmailActionBloc({ index, condition, form }: ICommonSegme
                             case "opt_in_email":
                                 return (
                                     <Select
-                                        value={condition.data.filters.value ?? ""}
+                                        value={condition.data.filters?.value ?? ""}
                                         onValueChange={(value) => subField.handleChange(value)}>
                                         <SelectTrigger className="flex-1 bg-white">
                                             <SelectValue placeholder="Select an action" />
@@ -88,7 +88,7 @@ export default function EmailActionBloc({ index, condition, form }: ICommonSegme
                                 return (
                                     <>
                                         <Select
-                                            value={condition.data.filters.resource_id ?? ""}
+                                            value={condition.data.filters?.resource_id ?? ""}
                                             onValueChange={(value) => {
                                                 form.setFieldValue(`conditions.conditions[${index}].data.filters.resource_id`, value);
                                             }}>
@@ -111,7 +111,7 @@ export default function EmailActionBloc({ index, condition, form }: ICommonSegme
                                         </Select>
 
                                         <Select
-                                            value={condition.data.filters.value ?? ""}
+                                            value={condition.data.filters?.value ?? ""}
                                             onValueChange={(value) => subField.handleChange(value)}>
                                             <SelectTrigger className="flex-1 bg-white">
                                                 <SelectValue placeholder="Select an action" />
@@ -132,7 +132,7 @@ export default function EmailActionBloc({ index, condition, form }: ICommonSegme
                                 return (
                                     <>
                                         <Select
-                                            value={condition.data.filters.resource_id ?? ""}
+                                            value={condition.data.filters?.resource_id ?? ""}
                                             onValueChange={(value) => {
                                                 form.setFieldValue(`conditions.conditions[${index}].data.filters.resource_id`, value);
                                             }}>
@@ -155,7 +155,7 @@ export default function EmailActionBloc({ index, condition, form }: ICommonSegme
                                         </Select>
 
                                         <Select
-                                            value={condition.data.filters.value ?? ""}
+                                            value={condition.data.filters?.value ?? ""}
                                             onValueChange={(value) => subField.handleChange(value)}>
                                             <SelectTrigger className="flex-1 bg-white">
                                                 <SelectValue placeholder="Select an action" />
@@ -176,7 +176,7 @@ export default function EmailActionBloc({ index, condition, form }: ICommonSegme
                                 return (
                                     <>
                                         <Select
-                                            value={condition.data.filters.resource_id ?? ""}
+                                            value={condition.data.filters?.resource_id ?? ""}
                                             onValueChange={(value) => {
                                                 form.setFieldValue(`conditions.conditions[${index}].data.filters.resource_id`, value);
                                             }}>
@@ -199,7 +199,7 @@ export default function EmailActionBloc({ index, condition, form }: ICommonSegme
                                         </Select>
 
                                         <Select
-                                            value={condition.data.filters.value ?? ""}
+                                            value={condition.data.filters?.value ?? ""}
                                             onValueChange={(value) => subField.handleChange(value)}>
                                             <SelectTrigger className="flex-1 bg-white">
                                                 <SelectValue placeholder="Select an action" />
@@ -224,7 +224,7 @@ export default function EmailActionBloc({ index, condition, form }: ICommonSegme
                                         type="text"
                                         className="bg-white flex-1"
                                         placeholder="Set a value"
-                                        value={condition.data.filters.value ?? ""}
+                                        value={condition.data.filters?.value ?? ""}
                                         onChange={(e) => subField.handleChange(e.target.value)}
                                     />
                                 );
